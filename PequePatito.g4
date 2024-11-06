@@ -3,26 +3,18 @@ grammar PequePatito;
 // Regla inicial del programa
 programa : p v f INICIO cuerpo FIN;
 p: PROGRAMA ID PUNTO_Y_COMA;
-//v: vars;
 v : VARS var_declaracion*;  // Declaración múltiple de variables
 
 f: funcs*;
 
 // Reglas de variables y funciones
 vars : VARS var_declaracion*;
-
-//vars : VARS var_declaracion | ;
-//var_declaracion : ( id_list DOS_PUNTOS tipo PUNTO_Y_COMA) vars_list;
 var_declaracion : id_list DOS_PUNTOS tipo PUNTO_Y_COMA;
 id_list : ID (COMA ID)*;
-vars_list: ( id_list DOS_PUNTOS tipo PUNTO_Y_COMA)*;
 
-// Reglas de funciones
-//funcs : NULA ID PARENTESIS_IZQ params PARENTESIS_DER LLAVE_IZQ vars? cuerpo LLAVE_DER PUNTO_Y_COMA ;
 funcs : NULA ID PARENTESIS_IZQ params? PARENTESIS_DER LLAVE_IZQ vars? cuerpo LLAVE_DER PUNTO_Y_COMA;
 
-params : (ID DOS_PUNTOS tipo (COMA ID DOS_PUNTOS tipo)*) |  ;
-
+params : (ID DOS_PUNTOS tipo (COMA ID DOS_PUNTOS tipo)*)?;
 
 // Cuerpo del programa
 cuerpo : LLAVE_IZQ estatutos LLAVE_DER;
@@ -30,35 +22,37 @@ cuerpo : LLAVE_IZQ estatutos LLAVE_DER;
 // Reglas de sentencias
 estatutos: estatuto*; // Permite cero o más estatutos
 estatuto: asigna
-          | condicion
-          | ciclo
-          | llamada
-          | imprime;
+         | condicion
+         | ciclo
+         | llamada
+         | imprime;
 
+// Definiciones de sentencias individuales
 asigna: ID ASIGNACION expresion PUNTO_Y_COMA; // Asignación
-imprime: IMPRIME PARENTESIS_IZQ (p_imp) PARENTESIS_DER PUNTO_Y_COMA; // Imprime
-p_imp : (expresion | LETRERO) (COMA p_imp)* ;// Imprime
+imprime: IMPRIME PARENTESIS_IZQ p_imp PARENTESIS_DER PUNTO_Y_COMA; // Imprime
+p_imp : (expresion | LETRERO | VERDADERO | FALSO) (COMA (expresion | LETRERO | VERDADERO | FALSO))* ;// Imprime
 condicion: SI PARENTESIS_IZQ expresion PARENTESIS_DER cuerpo else_part PUNTO_Y_COMA; // Condicional
 else_part: SINO cuerpo | ; // Parte del else (opcional)
 ciclo: MIETRAS PARENTESIS_IZQ expresion PARENTESIS_DER HAZ cuerpo PUNTO_Y_COMA; // Ciclo
 llamada: ID PARENTESIS_IZQ (expresion (COMA expresion)*)? PARENTESIS_DER PUNTO_Y_COMA; // Llamada a función
 
-
 // Expresiones y operadores
-expresion : bo;
+expresion : bo | logica;
+bo: exp (op_relacional exp)?;
+logica : logica op_logico logica
+       | NOT logica
+       | bo
+       ;
+op_relacional : MAYOR | MENOR | IGUAL | DIFERENTE;
+op_logico : AND | OR;
 exp : termino ((SUMA | RESTA) termino)*  ;
-
 termino:  factor ((MULTIPLICACION| DIVISION) factor)* ;
-
-bo: exp (('>' | '<' | '==' | '!=') exp)?;
-
 factor : PARENTESIS_IZQ expresion PARENTESIS_DER | f_otro;
 f_otro: (SUMA | RESTA)?  (ID | cte);
 
 // Tipos y literales
-tipo : ENT | FLOT ;
-cte : CTE_ENT | CTE_FLOT ;
-
+tipo : ENT | FLOT | BOOL;
+cte : CTE_ENT | CTE_FLOT | VERDADERO | FALSO;
 
 // ---------------------------------------------------
 // 1. Palabras clave del lenguaje
@@ -78,7 +72,10 @@ NULA: 'nula';
 // ---------------------------------------------------
 ENT: 'entero';
 FLOT: 'flotante';
+BOOL: 'booleano';
 IMPRIME: 'escribe';
+VERDADERO: 'verdadero';
+FALSO: 'falso';
 
 // ---------------------------------------------------
 // 3. Operadores y delimitadores
@@ -89,11 +86,17 @@ RESTA: '-';                      // Resta
 MULTIPLICACION: '*';            // Multiplicación
 DIVISION: '/';                   // División
 
+
 // Operadores de Comparación
 MAYOR: '>';                     // Mayor que
 MENOR: '<';                      // Menor que
 IGUAL: '==';                     // Igual
 DIFERENTE: '!=';                 // Diferente
+
+// Operadores Lógicos
+AND: '&&';                       // AND
+OR: '||';                        // OR
+NOT: '!';                        // NOT
 
 // Delimitadores
 PARENTESIS_IZQ: '(';            // Paréntesis izquierdo
@@ -112,10 +115,15 @@ BRACKET_DER: ']';                // Corchete derecho
 // ---------------------------------------------------
 CTE_ENT: [0-9]+;                 // Constantes enteras
 CTE_FLOT: [0-9]+ '.' [0-9]+;     // Constantes flotantes
-LETRERO: '"' ~["\r\n]* '"';        // Literales de cadena
+LETRERO: '"' ~["\r\n]* '"';      // Literales de cadena
 
 // ---------------------------------------------------
 // 5. Espacios en blanco
 // ---------------------------------------------------
 ID: [a-zA-Z_][a-zA-Z_0-9]*;     // Identificadores (nombres de variables y funciones)
 WS: [ \t\r\n]+ -> skip;          // Espacios en blanco
+
+// ---------------------------------------------------
+// 6. Comentarios
+// ---------------------------------------------------
+LINE_COMMENT: '//' ~[\r\n]* -> skip;
