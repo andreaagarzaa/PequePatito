@@ -30,7 +30,8 @@ estatuto: asigna
 // Definiciones de sentencias individuales
 asigna: ID ASIGNACION expresion PUNTO_Y_COMA; // Asignación
 imprime: IMPRIME PARENTESIS_IZQ p_imp PARENTESIS_DER PUNTO_Y_COMA; // Imprime
-p_imp : (expresion | LETRERO | VERDADERO | FALSO) (COMA (expresion | LETRERO | VERDADERO | FALSO))* ;// Imprime
+// p_imp : (expresion | LETRERO | VERDADERO | FALSO) (COMA (expresion | LETRERO | VERDADERO | FALSO))* ;// Imprime
+p_imp : (expresion | LETRERO ) (COMA (expresion | LETRERO))* ;
 condicion: SI PARENTESIS_IZQ expresion PARENTESIS_DER cuerpo else_part PUNTO_Y_COMA; // Condicional
 else_part: SINO cuerpo | ; // Parte del else (opcional)
 ciclo: MIETRAS PARENTESIS_IZQ expresion PARENTESIS_DER HAZ cuerpo PUNTO_Y_COMA; // Ciclo

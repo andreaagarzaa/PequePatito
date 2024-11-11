@@ -13,6 +13,8 @@ class PequePatitoListener(ParseTreeListener):
         self.ambito_actual = "global"
         self.pila_scopes = ["global"]
         self.errores = []
+        self.lista_param_impresion = [] #lista para guardar los parametros de impresion
+        self.pila_parametros = [] #pila para guardar los parametros de las funciones
 
         self.pilas = PilasCuadruplos()
         self.fila_cuadruplos = FilaCuadruplos()
@@ -195,30 +197,26 @@ class PequePatitoListener(ParseTreeListener):
 
         self.fila_cuadruplos.agregar_cuadruplo('=', expr_result, None, var_destino)
 
-    # Métodos para manejar sentencias de impresión
-    def exitImprime(self, ctx: PequePatitoParser.ImprimeContext):
-        p_imp = ctx.p_imp()
-        args = []
-        for arg in p_imp.children:
-            if arg.getText() == ',':
-                continue
-            if isinstance(arg, PequePatitoParser.ExpresionContext):
-                expr_result = self.pilas.pop_operando()
-                args.append(expr_result)
-            else:
-                if arg.symbol.type == PequePatitoParser.LETRERO:
-                    cadena = arg.getText()
-                    args.append(cadena)
-                elif arg.symbol.type == PequePatitoParser.VERDADERO:
-                    args.append("verdadero")
-                elif arg.symbol.type == PequePatitoParser.FALSO:
-                    args.append("falso")
-                elif arg.symbol.type == PequePatitoParser.ID:
-                    var = arg.getText()
-                    args.append(var)
 
-        for arg in args:
-            self.fila_cuadruplos.agregar_cuadruplo('print', arg, None, None)
+    # Métodos para manejar sentencias de impresión
+
+    def enterImprime(self, ctx: PequePatitoParser.ImprimeContext):
+        self.lista_param_impresion = []
+    def exitImprime(self, ctx: PequePatitoParser.ImprimeContext):
+        for parametro in self.lista_param_impresion:
+            #cuadruplo = ('print', parametro, None, None)
+            self.fila_cuadruplos.agregar_cuadruplo('print', parametro, None, None)
+        self.lista_param_impresion = []
+
+    def exitP_imp(self, ctx: PequePatitoParser.P_impContext):
+        if ctx.expresion():
+            expr_result = self.pilas.pop_operando()
+            self.lista_param_impresion.insert(0, expr_result)
+        elif ctx.LETRERO():
+            print(ctx.LETRERO()[0].getText())
+            cadena = ctx.LETRERO()[0].getText()
+            self.lista_param_impresion.insert(0 ,cadena)
+
 
     # Métodos para manejar sentencias condicionales
     def enterCondicion(self, ctx: PequePatitoParser.CondicionContext):
@@ -241,7 +239,7 @@ class PequePatitoListener(ParseTreeListener):
             self.pilas.push_salto(salto_goto)
 
             salto_false = self.pilas.pop_salto()
-            self.fila_cuadruplos.cuadruplos[salto_false] = ('if_false', resultado_condicion, None, len(self.fila_cuadruplos.cuadruplos))
+            self.fila_cuadruplos.cuadruplos[salto_false] = ('GOTOF', resultado_condicion, None, len(self.fila_cuadruplos.cuadruplos))
 
             # El código del bloque 'sino' se genera aquí durante el recorrido del árbol
 
@@ -249,4 +247,4 @@ class PequePatitoListener(ParseTreeListener):
             self.fila_cuadruplos.cuadruplos[salto_goto] = ('goto', None, None, len(self.fila_cuadruplos.cuadruplos))
         else:
             salto_false = self.pilas.pop_salto()
-            self.fila_cuadruplos.cuadruplos[salto_false] = ('if_false', resultado_condicion, None, len(self.fila_cuadruplos.cuadruplos))
+            self.fila_cuadruplos.cuadruplos[salto_false] = ('GOTOF', resultado_condicion, None, len(self.fila_cuadruplos.cuadruplos))
