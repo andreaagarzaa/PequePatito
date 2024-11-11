@@ -5,6 +5,7 @@ class PilasCuadruplos:
         self.pila_operadores = []
         self.pila_operandos = []
         self.pila_tipos = []
+        self.pila_saltos = []  # Agregar la pila de saltos
 
     def push_operador(self, operador):
         self.pila_operadores.append(operador)
@@ -28,4 +29,12 @@ class PilasCuadruplos:
     def pop_tipo(self):
         if self.pila_tipos:
             return self.pila_tipos.pop()
+        return None
+
+    def push_salto(self, salto):
+        self.pila_saltos.append(salto)
+
+    def pop_salto(self):
+        if self.pila_saltos:
+            return self.pila_saltos.pop()
         return None

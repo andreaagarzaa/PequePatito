@@ -14,18 +14,32 @@ vars
     x, y : entero;
     z : flotante;
     holi: entero;
-    flag: booleano;
+    c, a : entero;
 
+nula miFuncion(c: entero, a: entero) {
+    vars
+        pi: flotante;
+    {
+        pi = 3.14;
+        c = a + 10;
+        escribe("El valor de c es: ", c);
+    }
+};
 inicio{
     x = 10;
     y = 20;
     z = x + y * 1.5;
-    flag = verdadero;
-    si (x > y && flag) {
+    si (x > y) {
         escribe("x es mayor que y");
     } sino {
         escribe("y es mayor o igual que x");
     };
+    mientras (x < 50) haz {
+        holi = 3;
+        x = x + 5;
+        escribe("x ahora es: ", x);
+    };
+    miFuncion(x, y);
 }fin
 '''
 

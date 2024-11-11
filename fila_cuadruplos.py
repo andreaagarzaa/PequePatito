@@ -13,3 +13,4 @@ class FilaCuadruplos:
         for idx, cuadruplo in enumerate(self.cuadruplos):
             operador, op1, op2, resultado = cuadruplo
             print(f"{idx}: ({operador}, {op1}, {op2}, {resultado})")
+        print(f"{len(self.cuadruplos)}: (End of program)")
