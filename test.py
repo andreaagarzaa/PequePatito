@@ -6,6 +6,7 @@ from gen.PequePatitoParser import PequePatitoParser
 from cubo_semantico import CuboSemantico
 from estructura_directorio import TablaVariables, DirectorioFunciones
 from peque_patito_listener import PequePatitoListener
+from maquina_virtual import MaquinaVirtual
 import trace
 
 programa = '''
@@ -14,7 +15,6 @@ vars
     x, y : entero;
     z : flotante;
     holi: entero;
-    c, a : entero;
 
 nula miFuncion(c: entero, a: entero) {
     vars
@@ -25,6 +25,7 @@ nula miFuncion(c: entero, a: entero) {
         escribe("El valor de c es: ", c);
     }
 };
+
 inicio{
     x = 10;
     y = 20;
@@ -86,6 +87,11 @@ try:
 
     # Imprimir la fila de cuadruplos
     listener.fila_cuadruplos.imprimir_cuadruplos()
+
+    # # Ejecutar la máquina virtual
+    # print("\n--- Ejecución de la Máquina Virtual ---")
+    # vm = MaquinaVirtual(listener.fila_cuadruplos.cuadruplos, listener.tabla_constantes)
+    # vm.ejecutar()
 
 except Exception as e:
     print(f"Error durante el análisis léxico/sintáctico: {e}")

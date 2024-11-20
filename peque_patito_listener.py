@@ -21,6 +21,7 @@ class PequePatitoListener(ParseTreeListener):
         self.fila_cuadruplos = FilaCuadruplos()
         self.cont_temp = 0
         self.tabla_constantes = TablaConstantes()
+        self.fila_cuadruplos.agregar_cuadruplo('GOTO', None, None, None)
 
     def generar_temporal(self, tipo):
         direccion = self.tabla_variables.contadores['temporal'][tipo]
@@ -47,7 +48,14 @@ class PequePatitoListener(ParseTreeListener):
             else:
                 variable_info = self.tabla_variables.obtener_variable(nombre_var, scope_actual)
                 direccion = variable_info['direccion']
-                print(f"Declaración de variable '{nombre_var}' de tipo '{tipo}' en ámbito '{scope_actual}' con dirección '{direccion}'")
+                print(
+                    f"Declaración de variable '{nombre_var}' de tipo '{tipo}' en ámbito '{scope_actual}' con dirección '{direccion}'")
+                # Agregar la variable a las variables locales de la función en el directorio de funciones
+                if scope_actual != 'global':
+                    self.directorio_funciones.funciones[scope_actual]['variables_locales'][nombre_var] = {
+                        'tipo': tipo,
+                        'direccion': direccion
+                    }
 
     def enterFuncs(self, ctx: PequePatitoParser.FuncsContext):
         nombre_funcion = ctx.ID().getText()
@@ -57,28 +65,29 @@ class PequePatitoListener(ParseTreeListener):
             self.errores.append(f"Error: Función '{nombre_funcion}' ya declarada.")
         else:
             parametros = []
+            variables_locales = {}
             if ctx.params():
                 params_list = ctx.params().getText().split(',')
                 for param in params_list:
                     if ':' in param:
                         param_nombre, param_tipo = param.split(':')
                         parametros.append({'nombre': param_nombre, 'tipo': param_tipo})
+                        # Agregar parámetro a la tabla de variables
+                        self.tabla_variables.agregar_variable(param_nombre, param_tipo, nombre_funcion)
+                        variable_info = self.tabla_variables.obtener_variable(param_nombre, nombre_funcion)
+                        direccion = variable_info['direccion']
+                        # Agregar parámetro a las variables locales de la función
+                        variables_locales[param_nombre] = {'tipo': param_tipo, 'direccion': direccion}
                     else:
                         self.errores.append(f"Error: Error en declaración de parámetros de función '{nombre_funcion}'.")
 
-            self.tabla_variables_actual = {}
-            for param in parametros:
-                nombre_param = param['nombre']
-                tipo_param = param['tipo']
-                if nombre_param in self.tabla_variables_actual:
-                    self.errores.append(f"Error: Parámetro '{nombre_param}' ya declarado.")
-                else:
-                    self.tabla_variables.agregar_variable(nombre_param, tipo_param, nombre_funcion)
-                    variable_info = self.tabla_variables.obtener_variable(nombre_param, nombre_funcion)
-                    direccion = variable_info['direccion']
-                    self.tabla_variables_actual[nombre_param] = {'tipo': tipo_param, 'direccion': direccion}
-
-            self.directorio_funciones.agregar_funcion(nombre_funcion, tipo_retorno, parametros, self.tabla_variables_actual, len(self.fila_cuadruplos.cuadruplos))
+            self.directorio_funciones.agregar_funcion(
+                nombre_funcion,
+                tipo_retorno,
+                parametros,
+                variables_locales,  # Variables locales incluyen parámetros
+                len(self.fila_cuadruplos.cuadruplos)
+            )
             self.ambito_actual = nombre_funcion
             self.pila_scopes.append(nombre_funcion)
             print(f"Entrando a la función '{nombre_funcion}' con tipo de retorno '{tipo_retorno}'")
@@ -86,10 +95,6 @@ class PequePatitoListener(ParseTreeListener):
     def exitFuncs(self, ctx: PequePatitoParser.FuncsContext):
         self.pila_scopes.pop()
         self.ambito_actual = self.pila_scopes[-1]
-        if self.ambito_actual == "global":
-            self.tabla_variables_actual = self.tabla_variables.variables
-        else:
-            self.tabla_variables_actual = self.directorio_funciones.funciones[self.ambito_actual]["variables_locales"]
         self.fila_cuadruplos.agregar_cuadruplo('ENDPROC', None, None, None)
 
     def enterFactor(self, ctx: PequePatitoParser.FactorContext):

@@ -1,5 +1,4 @@
 # tabla_constantes.py
-
 class TablaConstantes:
     def __init__(self):
         self.constantes = {}  # {valor: dirección}
