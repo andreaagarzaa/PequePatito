@@ -14,6 +14,11 @@ class PequePatitoVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by PequePatitoParser#inicio.
+    def visitInicio(self, ctx:PequePatitoParser.InicioContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by PequePatitoParser#p.
     def visitP(self, ctx:PequePatitoParser.PContext):
         return self.visitChildren(ctx)

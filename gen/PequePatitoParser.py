@@ -10,90 +10,92 @@ else:
 
 def serializedATN():
     return [
-        4,1,45,252,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        4,1,45,256,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
         6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,
         2,14,7,14,2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,2,20,
         7,20,2,21,7,21,2,22,7,22,2,23,7,23,2,24,7,24,2,25,7,25,2,26,7,26,
-        2,27,7,27,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1,1,1,2,1,2,5,
-        2,70,8,2,10,2,12,2,73,9,2,1,3,5,3,76,8,3,10,3,12,3,79,9,3,1,4,1,
-        4,5,4,83,8,4,10,4,12,4,86,9,4,1,5,1,5,1,5,1,5,1,5,1,6,1,6,1,6,5,
-        6,96,8,6,10,6,12,6,99,9,6,1,7,1,7,1,7,1,7,3,7,105,8,7,1,7,1,7,1,
-        7,3,7,110,8,7,1,7,1,7,1,7,1,7,1,8,1,8,1,8,1,8,1,8,1,8,1,8,5,8,123,
-        8,8,10,8,12,8,126,9,8,3,8,128,8,8,1,9,1,9,1,9,1,9,1,10,5,10,135,
-        8,10,10,10,12,10,138,9,10,1,11,1,11,1,11,1,11,1,11,3,11,145,8,11,
-        1,12,1,12,1,12,1,12,1,12,1,13,1,13,1,13,1,13,1,13,1,13,1,14,1,14,
-        3,14,160,8,14,1,14,1,14,1,14,3,14,165,8,14,5,14,167,8,14,10,14,12,
-        14,170,9,14,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,1,16,1,16,1,
-        16,3,16,183,8,16,1,17,1,17,1,17,1,17,1,17,1,17,1,17,1,17,1,18,1,
-        18,1,18,1,18,1,18,5,18,198,8,18,10,18,12,18,201,9,18,3,18,203,8,
-        18,1,18,1,18,1,18,1,19,1,19,1,19,1,19,3,19,212,8,19,1,20,1,20,1,
-        21,1,21,1,21,1,21,5,21,220,8,21,10,21,12,21,223,9,21,1,22,1,22,1,
-        23,1,23,1,23,1,23,5,23,231,8,23,10,23,12,23,234,9,23,1,24,1,24,1,
-        25,1,25,1,25,1,25,1,25,1,25,1,25,1,25,3,25,246,8,25,1,26,1,26,1,
-        27,1,27,1,27,0,0,28,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,
-        34,36,38,40,42,44,46,48,50,52,54,0,5,1,0,20,25,1,0,16,17,1,0,18,
-        19,1,0,10,11,1,0,39,41,248,0,56,1,0,0,0,2,63,1,0,0,0,4,67,1,0,0,
-        0,6,77,1,0,0,0,8,80,1,0,0,0,10,87,1,0,0,0,12,92,1,0,0,0,14,100,1,
-        0,0,0,16,127,1,0,0,0,18,129,1,0,0,0,20,136,1,0,0,0,22,144,1,0,0,
-        0,24,146,1,0,0,0,26,151,1,0,0,0,28,159,1,0,0,0,30,171,1,0,0,0,32,
-        182,1,0,0,0,34,184,1,0,0,0,36,192,1,0,0,0,38,207,1,0,0,0,40,213,
-        1,0,0,0,42,215,1,0,0,0,44,224,1,0,0,0,46,226,1,0,0,0,48,235,1,0,
-        0,0,50,245,1,0,0,0,52,247,1,0,0,0,54,249,1,0,0,0,56,57,3,2,1,0,57,
-        58,3,4,2,0,58,59,3,6,3,0,59,60,5,2,0,0,60,61,3,18,9,0,61,62,5,3,
-        0,0,62,1,1,0,0,0,63,64,5,1,0,0,64,65,5,43,0,0,65,66,5,33,0,0,66,
-        3,1,0,0,0,67,71,5,4,0,0,68,70,3,10,5,0,69,68,1,0,0,0,70,73,1,0,0,
-        0,71,69,1,0,0,0,71,72,1,0,0,0,72,5,1,0,0,0,73,71,1,0,0,0,74,76,3,
-        14,7,0,75,74,1,0,0,0,76,79,1,0,0,0,77,75,1,0,0,0,77,78,1,0,0,0,78,
-        7,1,0,0,0,79,77,1,0,0,0,80,84,5,4,0,0,81,83,3,10,5,0,82,81,1,0,0,
-        0,83,86,1,0,0,0,84,82,1,0,0,0,84,85,1,0,0,0,85,9,1,0,0,0,86,84,1,
-        0,0,0,87,88,3,12,6,0,88,89,5,35,0,0,89,90,3,52,26,0,90,91,5,33,0,
-        0,91,11,1,0,0,0,92,97,5,43,0,0,93,94,5,34,0,0,94,96,5,43,0,0,95,
-        93,1,0,0,0,96,99,1,0,0,0,97,95,1,0,0,0,97,98,1,0,0,0,98,13,1,0,0,
-        0,99,97,1,0,0,0,100,101,5,9,0,0,101,102,5,43,0,0,102,104,5,29,0,
-        0,103,105,3,16,8,0,104,103,1,0,0,0,104,105,1,0,0,0,105,106,1,0,0,
-        0,106,107,5,30,0,0,107,109,5,31,0,0,108,110,3,8,4,0,109,108,1,0,
-        0,0,109,110,1,0,0,0,110,111,1,0,0,0,111,112,3,18,9,0,112,113,5,32,
-        0,0,113,114,5,33,0,0,114,15,1,0,0,0,115,116,5,43,0,0,116,117,5,35,
-        0,0,117,124,3,52,26,0,118,119,5,34,0,0,119,120,5,43,0,0,120,121,
-        5,35,0,0,121,123,3,52,26,0,122,118,1,0,0,0,123,126,1,0,0,0,124,122,
-        1,0,0,0,124,125,1,0,0,0,125,128,1,0,0,0,126,124,1,0,0,0,127,115,
-        1,0,0,0,127,128,1,0,0,0,128,17,1,0,0,0,129,130,5,31,0,0,130,131,
-        3,20,10,0,131,132,5,32,0,0,132,19,1,0,0,0,133,135,3,22,11,0,134,
-        133,1,0,0,0,135,138,1,0,0,0,136,134,1,0,0,0,136,137,1,0,0,0,137,
-        21,1,0,0,0,138,136,1,0,0,0,139,145,3,24,12,0,140,145,3,30,15,0,141,
-        145,3,34,17,0,142,145,3,36,18,0,143,145,3,26,13,0,144,139,1,0,0,
-        0,144,140,1,0,0,0,144,141,1,0,0,0,144,142,1,0,0,0,144,143,1,0,0,
-        0,145,23,1,0,0,0,146,147,5,43,0,0,147,148,5,36,0,0,148,149,3,38,
-        19,0,149,150,5,33,0,0,150,25,1,0,0,0,151,152,5,13,0,0,152,153,5,
-        29,0,0,153,154,3,28,14,0,154,155,5,30,0,0,155,156,5,33,0,0,156,27,
-        1,0,0,0,157,160,3,38,19,0,158,160,5,42,0,0,159,157,1,0,0,0,159,158,
-        1,0,0,0,160,168,1,0,0,0,161,164,5,34,0,0,162,165,3,38,19,0,163,165,
-        5,42,0,0,164,162,1,0,0,0,164,163,1,0,0,0,165,167,1,0,0,0,166,161,
-        1,0,0,0,167,170,1,0,0,0,168,166,1,0,0,0,168,169,1,0,0,0,169,29,1,
-        0,0,0,170,168,1,0,0,0,171,172,5,5,0,0,172,173,5,29,0,0,173,174,3,
-        38,19,0,174,175,5,30,0,0,175,176,3,18,9,0,176,177,3,32,16,0,177,
-        178,5,33,0,0,178,31,1,0,0,0,179,180,5,6,0,0,180,183,3,18,9,0,181,
-        183,1,0,0,0,182,179,1,0,0,0,182,181,1,0,0,0,183,33,1,0,0,0,184,185,
-        5,7,0,0,185,186,5,29,0,0,186,187,3,38,19,0,187,188,5,30,0,0,188,
-        189,5,8,0,0,189,190,3,18,9,0,190,191,5,33,0,0,191,35,1,0,0,0,192,
-        193,5,43,0,0,193,202,5,29,0,0,194,199,3,38,19,0,195,196,5,34,0,0,
-        196,198,3,38,19,0,197,195,1,0,0,0,198,201,1,0,0,0,199,197,1,0,0,
-        0,199,200,1,0,0,0,200,203,1,0,0,0,201,199,1,0,0,0,202,194,1,0,0,
-        0,202,203,1,0,0,0,203,204,1,0,0,0,204,205,5,30,0,0,205,206,5,33,
-        0,0,206,37,1,0,0,0,207,211,3,42,21,0,208,209,3,40,20,0,209,210,3,
-        42,21,0,210,212,1,0,0,0,211,208,1,0,0,0,211,212,1,0,0,0,212,39,1,
-        0,0,0,213,214,7,0,0,0,214,41,1,0,0,0,215,221,3,46,23,0,216,217,3,
-        44,22,0,217,218,3,46,23,0,218,220,1,0,0,0,219,216,1,0,0,0,220,223,
-        1,0,0,0,221,219,1,0,0,0,221,222,1,0,0,0,222,43,1,0,0,0,223,221,1,
-        0,0,0,224,225,7,1,0,0,225,45,1,0,0,0,226,232,3,50,25,0,227,228,3,
-        48,24,0,228,229,3,50,25,0,229,231,1,0,0,0,230,227,1,0,0,0,231,234,
-        1,0,0,0,232,230,1,0,0,0,232,233,1,0,0,0,233,47,1,0,0,0,234,232,1,
-        0,0,0,235,236,7,2,0,0,236,49,1,0,0,0,237,238,5,29,0,0,238,239,3,
-        38,19,0,239,240,5,30,0,0,240,246,1,0,0,0,241,242,7,1,0,0,242,246,
-        3,54,27,0,243,246,5,43,0,0,244,246,5,41,0,0,245,237,1,0,0,0,245,
-        241,1,0,0,0,245,243,1,0,0,0,245,244,1,0,0,0,246,51,1,0,0,0,247,248,
-        7,3,0,0,248,53,1,0,0,0,249,250,7,4,0,0,250,55,1,0,0,0,20,71,77,84,
-        97,104,109,124,127,136,144,159,164,168,182,199,202,211,221,232,245
+        2,27,7,27,2,28,7,28,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,1,1,2,1,2,
+        1,2,1,2,1,3,1,3,5,3,74,8,3,10,3,12,3,77,9,3,1,4,5,4,80,8,4,10,4,
+        12,4,83,9,4,1,5,1,5,5,5,87,8,5,10,5,12,5,90,9,5,1,6,1,6,1,6,1,6,
+        1,6,1,7,1,7,1,7,5,7,100,8,7,10,7,12,7,103,9,7,1,8,1,8,1,8,1,8,3,
+        8,109,8,8,1,8,1,8,1,8,3,8,114,8,8,1,8,1,8,1,8,1,8,1,9,1,9,1,9,1,
+        9,1,9,1,9,1,9,5,9,127,8,9,10,9,12,9,130,9,9,3,9,132,8,9,1,10,1,10,
+        1,10,1,10,1,11,5,11,139,8,11,10,11,12,11,142,9,11,1,12,1,12,1,12,
+        1,12,1,12,3,12,149,8,12,1,13,1,13,1,13,1,13,1,13,1,14,1,14,1,14,
+        1,14,1,14,1,14,1,15,1,15,3,15,164,8,15,1,15,1,15,1,15,3,15,169,8,
+        15,5,15,171,8,15,10,15,12,15,174,9,15,1,16,1,16,1,16,1,16,1,16,1,
+        16,1,16,1,16,1,17,1,17,1,17,3,17,187,8,17,1,18,1,18,1,18,1,18,1,
+        18,1,18,1,18,1,18,1,19,1,19,1,19,1,19,1,19,5,19,202,8,19,10,19,12,
+        19,205,9,19,3,19,207,8,19,1,19,1,19,1,19,1,20,1,20,1,20,1,20,3,20,
+        216,8,20,1,21,1,21,1,22,1,22,1,22,1,22,5,22,224,8,22,10,22,12,22,
+        227,9,22,1,23,1,23,1,24,1,24,1,24,1,24,5,24,235,8,24,10,24,12,24,
+        238,9,24,1,25,1,25,1,26,1,26,1,26,1,26,1,26,1,26,1,26,1,26,3,26,
+        250,8,26,1,27,1,27,1,28,1,28,1,28,0,0,29,0,2,4,6,8,10,12,14,16,18,
+        20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,0,5,1,0,
+        20,25,1,0,16,17,1,0,18,19,1,0,10,11,1,0,39,41,251,0,58,1,0,0,0,2,
+        65,1,0,0,0,4,67,1,0,0,0,6,71,1,0,0,0,8,81,1,0,0,0,10,84,1,0,0,0,
+        12,91,1,0,0,0,14,96,1,0,0,0,16,104,1,0,0,0,18,131,1,0,0,0,20,133,
+        1,0,0,0,22,140,1,0,0,0,24,148,1,0,0,0,26,150,1,0,0,0,28,155,1,0,
+        0,0,30,163,1,0,0,0,32,175,1,0,0,0,34,186,1,0,0,0,36,188,1,0,0,0,
+        38,196,1,0,0,0,40,211,1,0,0,0,42,217,1,0,0,0,44,219,1,0,0,0,46,228,
+        1,0,0,0,48,230,1,0,0,0,50,239,1,0,0,0,52,249,1,0,0,0,54,251,1,0,
+        0,0,56,253,1,0,0,0,58,59,3,4,2,0,59,60,3,6,3,0,60,61,3,8,4,0,61,
+        62,3,2,1,0,62,63,3,20,10,0,63,64,5,3,0,0,64,1,1,0,0,0,65,66,5,2,
+        0,0,66,3,1,0,0,0,67,68,5,1,0,0,68,69,5,43,0,0,69,70,5,33,0,0,70,
+        5,1,0,0,0,71,75,5,4,0,0,72,74,3,12,6,0,73,72,1,0,0,0,74,77,1,0,0,
+        0,75,73,1,0,0,0,75,76,1,0,0,0,76,7,1,0,0,0,77,75,1,0,0,0,78,80,3,
+        16,8,0,79,78,1,0,0,0,80,83,1,0,0,0,81,79,1,0,0,0,81,82,1,0,0,0,82,
+        9,1,0,0,0,83,81,1,0,0,0,84,88,5,4,0,0,85,87,3,12,6,0,86,85,1,0,0,
+        0,87,90,1,0,0,0,88,86,1,0,0,0,88,89,1,0,0,0,89,11,1,0,0,0,90,88,
+        1,0,0,0,91,92,3,14,7,0,92,93,5,35,0,0,93,94,3,54,27,0,94,95,5,33,
+        0,0,95,13,1,0,0,0,96,101,5,43,0,0,97,98,5,34,0,0,98,100,5,43,0,0,
+        99,97,1,0,0,0,100,103,1,0,0,0,101,99,1,0,0,0,101,102,1,0,0,0,102,
+        15,1,0,0,0,103,101,1,0,0,0,104,105,5,9,0,0,105,106,5,43,0,0,106,
+        108,5,29,0,0,107,109,3,18,9,0,108,107,1,0,0,0,108,109,1,0,0,0,109,
+        110,1,0,0,0,110,111,5,30,0,0,111,113,5,31,0,0,112,114,3,10,5,0,113,
+        112,1,0,0,0,113,114,1,0,0,0,114,115,1,0,0,0,115,116,3,20,10,0,116,
+        117,5,32,0,0,117,118,5,33,0,0,118,17,1,0,0,0,119,120,5,43,0,0,120,
+        121,5,35,0,0,121,128,3,54,27,0,122,123,5,34,0,0,123,124,5,43,0,0,
+        124,125,5,35,0,0,125,127,3,54,27,0,126,122,1,0,0,0,127,130,1,0,0,
+        0,128,126,1,0,0,0,128,129,1,0,0,0,129,132,1,0,0,0,130,128,1,0,0,
+        0,131,119,1,0,0,0,131,132,1,0,0,0,132,19,1,0,0,0,133,134,5,31,0,
+        0,134,135,3,22,11,0,135,136,5,32,0,0,136,21,1,0,0,0,137,139,3,24,
+        12,0,138,137,1,0,0,0,139,142,1,0,0,0,140,138,1,0,0,0,140,141,1,0,
+        0,0,141,23,1,0,0,0,142,140,1,0,0,0,143,149,3,26,13,0,144,149,3,32,
+        16,0,145,149,3,36,18,0,146,149,3,38,19,0,147,149,3,28,14,0,148,143,
+        1,0,0,0,148,144,1,0,0,0,148,145,1,0,0,0,148,146,1,0,0,0,148,147,
+        1,0,0,0,149,25,1,0,0,0,150,151,5,43,0,0,151,152,5,36,0,0,152,153,
+        3,40,20,0,153,154,5,33,0,0,154,27,1,0,0,0,155,156,5,13,0,0,156,157,
+        5,29,0,0,157,158,3,30,15,0,158,159,5,30,0,0,159,160,5,33,0,0,160,
+        29,1,0,0,0,161,164,3,40,20,0,162,164,5,42,0,0,163,161,1,0,0,0,163,
+        162,1,0,0,0,164,172,1,0,0,0,165,168,5,34,0,0,166,169,3,40,20,0,167,
+        169,5,42,0,0,168,166,1,0,0,0,168,167,1,0,0,0,169,171,1,0,0,0,170,
+        165,1,0,0,0,171,174,1,0,0,0,172,170,1,0,0,0,172,173,1,0,0,0,173,
+        31,1,0,0,0,174,172,1,0,0,0,175,176,5,5,0,0,176,177,5,29,0,0,177,
+        178,3,40,20,0,178,179,5,30,0,0,179,180,3,20,10,0,180,181,3,34,17,
+        0,181,182,5,33,0,0,182,33,1,0,0,0,183,184,5,6,0,0,184,187,3,20,10,
+        0,185,187,1,0,0,0,186,183,1,0,0,0,186,185,1,0,0,0,187,35,1,0,0,0,
+        188,189,5,7,0,0,189,190,5,29,0,0,190,191,3,40,20,0,191,192,5,30,
+        0,0,192,193,5,8,0,0,193,194,3,20,10,0,194,195,5,33,0,0,195,37,1,
+        0,0,0,196,197,5,43,0,0,197,206,5,29,0,0,198,203,3,40,20,0,199,200,
+        5,34,0,0,200,202,3,40,20,0,201,199,1,0,0,0,202,205,1,0,0,0,203,201,
+        1,0,0,0,203,204,1,0,0,0,204,207,1,0,0,0,205,203,1,0,0,0,206,198,
+        1,0,0,0,206,207,1,0,0,0,207,208,1,0,0,0,208,209,5,30,0,0,209,210,
+        5,33,0,0,210,39,1,0,0,0,211,215,3,44,22,0,212,213,3,42,21,0,213,
+        214,3,44,22,0,214,216,1,0,0,0,215,212,1,0,0,0,215,216,1,0,0,0,216,
+        41,1,0,0,0,217,218,7,0,0,0,218,43,1,0,0,0,219,225,3,48,24,0,220,
+        221,3,46,23,0,221,222,3,48,24,0,222,224,1,0,0,0,223,220,1,0,0,0,
+        224,227,1,0,0,0,225,223,1,0,0,0,225,226,1,0,0,0,226,45,1,0,0,0,227,
+        225,1,0,0,0,228,229,7,1,0,0,229,47,1,0,0,0,230,236,3,52,26,0,231,
+        232,3,50,25,0,232,233,3,52,26,0,233,235,1,0,0,0,234,231,1,0,0,0,
+        235,238,1,0,0,0,236,234,1,0,0,0,236,237,1,0,0,0,237,49,1,0,0,0,238,
+        236,1,0,0,0,239,240,7,2,0,0,240,51,1,0,0,0,241,242,5,29,0,0,242,
+        243,3,40,20,0,243,244,5,30,0,0,244,250,1,0,0,0,245,246,7,1,0,0,246,
+        250,3,56,28,0,247,250,5,43,0,0,248,250,5,41,0,0,249,241,1,0,0,0,
+        249,245,1,0,0,0,249,247,1,0,0,0,249,248,1,0,0,0,250,53,1,0,0,0,251,
+        252,7,3,0,0,252,55,1,0,0,0,253,254,7,4,0,0,254,57,1,0,0,0,20,75,
+        81,88,101,108,113,128,131,140,148,163,168,172,186,203,206,215,225,
+        236,249
     ]
 
 class PequePatitoParser ( Parser ):
@@ -125,35 +127,36 @@ class PequePatitoParser ( Parser ):
                       "CTE_FLOT", "NUMERO", "LETRERO", "ID", "WS", "LINE_COMMENT" ]
 
     RULE_programa = 0
-    RULE_p = 1
-    RULE_v = 2
-    RULE_f = 3
-    RULE_vars = 4
-    RULE_var_declaracion = 5
-    RULE_id_list = 6
-    RULE_funcs = 7
-    RULE_params = 8
-    RULE_cuerpo = 9
-    RULE_estatutos = 10
-    RULE_estatuto = 11
-    RULE_asigna = 12
-    RULE_imprime = 13
-    RULE_p_imp = 14
-    RULE_condicion = 15
-    RULE_else_part = 16
-    RULE_ciclo = 17
-    RULE_llamada = 18
-    RULE_expresion = 19
-    RULE_bo = 20
-    RULE_exp = 21
-    RULE_operador = 22
-    RULE_termino = 23
-    RULE_operador_factor = 24
-    RULE_factor = 25
-    RULE_tipo = 26
-    RULE_cte = 27
+    RULE_inicio = 1
+    RULE_p = 2
+    RULE_v = 3
+    RULE_f = 4
+    RULE_vars = 5
+    RULE_var_declaracion = 6
+    RULE_id_list = 7
+    RULE_funcs = 8
+    RULE_params = 9
+    RULE_cuerpo = 10
+    RULE_estatutos = 11
+    RULE_estatuto = 12
+    RULE_asigna = 13
+    RULE_imprime = 14
+    RULE_p_imp = 15
+    RULE_condicion = 16
+    RULE_else_part = 17
+    RULE_ciclo = 18
+    RULE_llamada = 19
+    RULE_expresion = 20
+    RULE_bo = 21
+    RULE_exp = 22
+    RULE_operador = 23
+    RULE_termino = 24
+    RULE_operador_factor = 25
+    RULE_factor = 26
+    RULE_tipo = 27
+    RULE_cte = 28
 
-    ruleNames =  [ "programa", "p", "v", "f", "vars", "var_declaracion", 
+    ruleNames =  [ "programa", "inicio", "p", "v", "f", "vars", "var_declaracion", 
                    "id_list", "funcs", "params", "cuerpo", "estatutos", 
                    "estatuto", "asigna", "imprime", "p_imp", "condicion", 
                    "else_part", "ciclo", "llamada", "expresion", "bo", "exp", 
@@ -235,8 +238,9 @@ class PequePatitoParser ( Parser ):
             return self.getTypedRuleContext(PequePatitoParser.FContext,0)
 
 
-        def INICIO(self):
-            return self.getToken(PequePatitoParser.INICIO, 0)
+        def inicio(self):
+            return self.getTypedRuleContext(PequePatitoParser.InicioContext,0)
+
 
         def cuerpo(self):
             return self.getTypedRuleContext(PequePatitoParser.CuerpoContext,0)
@@ -271,18 +275,65 @@ class PequePatitoParser ( Parser ):
         self.enterRule(localctx, 0, self.RULE_programa)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 56
-            self.p()
-            self.state = 57
-            self.v()
             self.state = 58
-            self.f()
+            self.p()
             self.state = 59
-            self.match(PequePatitoParser.INICIO)
+            self.v()
             self.state = 60
-            self.cuerpo()
+            self.f()
             self.state = 61
+            self.inicio()
+            self.state = 62
+            self.cuerpo()
+            self.state = 63
             self.match(PequePatitoParser.FIN)
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+        finally:
+            self.exitRule()
+        return localctx
+
+
+    class InicioContext(ParserRuleContext):
+        __slots__ = 'parser'
+
+        def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
+            super().__init__(parent, invokingState)
+            self.parser = parser
+
+        def INICIO(self):
+            return self.getToken(PequePatitoParser.INICIO, 0)
+
+        def getRuleIndex(self):
+            return PequePatitoParser.RULE_inicio
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterInicio" ):
+                listener.enterInicio(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitInicio" ):
+                listener.exitInicio(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitInicio" ):
+                return visitor.visitInicio(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+
+
+    def inicio(self):
+
+        localctx = PequePatitoParser.InicioContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 2, self.RULE_inicio)
+        try:
+            self.enterOuterAlt(localctx, 1)
+            self.state = 65
+            self.match(PequePatitoParser.INICIO)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -331,14 +382,14 @@ class PequePatitoParser ( Parser ):
     def p(self):
 
         localctx = PequePatitoParser.PContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 2, self.RULE_p)
+        self.enterRule(localctx, 4, self.RULE_p)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 63
+            self.state = 67
             self.match(PequePatitoParser.PROGRAMA)
-            self.state = 64
+            self.state = 68
             self.match(PequePatitoParser.ID)
-            self.state = 65
+            self.state = 69
             self.match(PequePatitoParser.PUNTO_Y_COMA)
         except RecognitionException as re:
             localctx.exception = re
@@ -389,19 +440,19 @@ class PequePatitoParser ( Parser ):
     def v(self):
 
         localctx = PequePatitoParser.VContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 4, self.RULE_v)
+        self.enterRule(localctx, 6, self.RULE_v)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 67
-            self.match(PequePatitoParser.VARS)
             self.state = 71
+            self.match(PequePatitoParser.VARS)
+            self.state = 75
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==43:
-                self.state = 68
+                self.state = 72
                 self.var_declaracion()
-                self.state = 73
+                self.state = 77
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -451,17 +502,17 @@ class PequePatitoParser ( Parser ):
     def f(self):
 
         localctx = PequePatitoParser.FContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 6, self.RULE_f)
+        self.enterRule(localctx, 8, self.RULE_f)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 77
+            self.state = 81
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==9:
-                self.state = 74
+                self.state = 78
                 self.funcs()
-                self.state = 79
+                self.state = 83
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -514,19 +565,19 @@ class PequePatitoParser ( Parser ):
     def vars_(self):
 
         localctx = PequePatitoParser.VarsContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 8, self.RULE_vars)
+        self.enterRule(localctx, 10, self.RULE_vars)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 80
-            self.match(PequePatitoParser.VARS)
             self.state = 84
+            self.match(PequePatitoParser.VARS)
+            self.state = 88
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==43:
-                self.state = 81
+                self.state = 85
                 self.var_declaracion()
-                self.state = 86
+                self.state = 90
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -583,16 +634,16 @@ class PequePatitoParser ( Parser ):
     def var_declaracion(self):
 
         localctx = PequePatitoParser.Var_declaracionContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 10, self.RULE_var_declaracion)
+        self.enterRule(localctx, 12, self.RULE_var_declaracion)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 87
+            self.state = 91
             self.id_list()
-            self.state = 88
+            self.state = 92
             self.match(PequePatitoParser.DOS_PUNTOS)
-            self.state = 89
+            self.state = 93
             self.tipo()
-            self.state = 90
+            self.state = 94
             self.match(PequePatitoParser.PUNTO_Y_COMA)
         except RecognitionException as re:
             localctx.exception = re
@@ -645,21 +696,21 @@ class PequePatitoParser ( Parser ):
     def id_list(self):
 
         localctx = PequePatitoParser.Id_listContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 12, self.RULE_id_list)
+        self.enterRule(localctx, 14, self.RULE_id_list)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 92
+            self.state = 96
             self.match(PequePatitoParser.ID)
-            self.state = 97
+            self.state = 101
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==34:
-                self.state = 93
+                self.state = 97
                 self.match(PequePatitoParser.COMA)
-                self.state = 94
+                self.state = 98
                 self.match(PequePatitoParser.ID)
-                self.state = 99
+                self.state = 103
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -735,41 +786,41 @@ class PequePatitoParser ( Parser ):
     def funcs(self):
 
         localctx = PequePatitoParser.FuncsContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 14, self.RULE_funcs)
+        self.enterRule(localctx, 16, self.RULE_funcs)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 100
-            self.match(PequePatitoParser.NULA)
-            self.state = 101
-            self.match(PequePatitoParser.ID)
-            self.state = 102
-            self.match(PequePatitoParser.PARENTESIS_IZQ)
             self.state = 104
+            self.match(PequePatitoParser.NULA)
+            self.state = 105
+            self.match(PequePatitoParser.ID)
+            self.state = 106
+            self.match(PequePatitoParser.PARENTESIS_IZQ)
+            self.state = 108
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,4,self._ctx)
             if la_ == 1:
-                self.state = 103
+                self.state = 107
                 self.params()
 
 
-            self.state = 106
+            self.state = 110
             self.match(PequePatitoParser.PARENTESIS_DER)
-            self.state = 107
+            self.state = 111
             self.match(PequePatitoParser.LLAVE_IZQ)
-            self.state = 109
+            self.state = 113
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==4:
-                self.state = 108
+                self.state = 112
                 self.vars_()
 
 
-            self.state = 111
+            self.state = 115
             self.cuerpo()
-            self.state = 112
+            self.state = 116
             self.match(PequePatitoParser.LLAVE_DER)
-            self.state = 113
+            self.state = 117
             self.match(PequePatitoParser.PUNTO_Y_COMA)
         except RecognitionException as re:
             localctx.exception = re
@@ -835,33 +886,33 @@ class PequePatitoParser ( Parser ):
     def params(self):
 
         localctx = PequePatitoParser.ParamsContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 16, self.RULE_params)
+        self.enterRule(localctx, 18, self.RULE_params)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 127
+            self.state = 131
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if _la==43:
-                self.state = 115
+                self.state = 119
                 self.match(PequePatitoParser.ID)
-                self.state = 116
+                self.state = 120
                 self.match(PequePatitoParser.DOS_PUNTOS)
-                self.state = 117
+                self.state = 121
                 self.tipo()
-                self.state = 124
+                self.state = 128
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while _la==34:
-                    self.state = 118
+                    self.state = 122
                     self.match(PequePatitoParser.COMA)
-                    self.state = 119
+                    self.state = 123
                     self.match(PequePatitoParser.ID)
-                    self.state = 120
+                    self.state = 124
                     self.match(PequePatitoParser.DOS_PUNTOS)
-                    self.state = 121
+                    self.state = 125
                     self.tipo()
-                    self.state = 126
+                    self.state = 130
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
 
@@ -916,14 +967,14 @@ class PequePatitoParser ( Parser ):
     def cuerpo(self):
 
         localctx = PequePatitoParser.CuerpoContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 18, self.RULE_cuerpo)
+        self.enterRule(localctx, 20, self.RULE_cuerpo)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 129
+            self.state = 133
             self.match(PequePatitoParser.LLAVE_IZQ)
-            self.state = 130
+            self.state = 134
             self.estatutos()
-            self.state = 131
+            self.state = 135
             self.match(PequePatitoParser.LLAVE_DER)
         except RecognitionException as re:
             localctx.exception = re
@@ -971,17 +1022,17 @@ class PequePatitoParser ( Parser ):
     def estatutos(self):
 
         localctx = PequePatitoParser.EstatutosContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 20, self.RULE_estatutos)
+        self.enterRule(localctx, 22, self.RULE_estatutos)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 136
+            self.state = 140
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while (((_la) & ~0x3f) == 0 and ((1 << _la) & 8796093030560) != 0):
-                self.state = 133
+                self.state = 137
                 self.estatuto()
-                self.state = 138
+                self.state = 142
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -1044,38 +1095,38 @@ class PequePatitoParser ( Parser ):
     def estatuto(self):
 
         localctx = PequePatitoParser.EstatutoContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 22, self.RULE_estatuto)
+        self.enterRule(localctx, 24, self.RULE_estatuto)
         try:
-            self.state = 144
+            self.state = 148
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,9,self._ctx)
             if la_ == 1:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 139
+                self.state = 143
                 self.asigna()
                 pass
 
             elif la_ == 2:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 140
+                self.state = 144
                 self.condicion()
                 pass
 
             elif la_ == 3:
                 self.enterOuterAlt(localctx, 3)
-                self.state = 141
+                self.state = 145
                 self.ciclo()
                 pass
 
             elif la_ == 4:
                 self.enterOuterAlt(localctx, 4)
-                self.state = 142
+                self.state = 146
                 self.llamada()
                 pass
 
             elif la_ == 5:
                 self.enterOuterAlt(localctx, 5)
-                self.state = 143
+                self.state = 147
                 self.imprime()
                 pass
 
@@ -1132,16 +1183,16 @@ class PequePatitoParser ( Parser ):
     def asigna(self):
 
         localctx = PequePatitoParser.AsignaContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 24, self.RULE_asigna)
+        self.enterRule(localctx, 26, self.RULE_asigna)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 146
+            self.state = 150
             self.match(PequePatitoParser.ID)
-            self.state = 147
+            self.state = 151
             self.match(PequePatitoParser.ASIGNACION)
-            self.state = 148
+            self.state = 152
             self.expresion()
-            self.state = 149
+            self.state = 153
             self.match(PequePatitoParser.PUNTO_Y_COMA)
         except RecognitionException as re:
             localctx.exception = re
@@ -1198,18 +1249,18 @@ class PequePatitoParser ( Parser ):
     def imprime(self):
 
         localctx = PequePatitoParser.ImprimeContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 26, self.RULE_imprime)
+        self.enterRule(localctx, 28, self.RULE_imprime)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 151
-            self.match(PequePatitoParser.IMPRIME)
-            self.state = 152
-            self.match(PequePatitoParser.PARENTESIS_IZQ)
-            self.state = 153
-            self.p_imp()
-            self.state = 154
-            self.match(PequePatitoParser.PARENTESIS_DER)
             self.state = 155
+            self.match(PequePatitoParser.IMPRIME)
+            self.state = 156
+            self.match(PequePatitoParser.PARENTESIS_IZQ)
+            self.state = 157
+            self.p_imp()
+            self.state = 158
+            self.match(PequePatitoParser.PARENTESIS_DER)
+            self.state = 159
             self.match(PequePatitoParser.PUNTO_Y_COMA)
         except RecognitionException as re:
             localctx.exception = re
@@ -1269,45 +1320,45 @@ class PequePatitoParser ( Parser ):
     def p_imp(self):
 
         localctx = PequePatitoParser.P_impContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 28, self.RULE_p_imp)
+        self.enterRule(localctx, 30, self.RULE_p_imp)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 159
+            self.state = 163
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [16, 17, 29, 41, 43]:
-                self.state = 157
+                self.state = 161
                 self.expresion()
                 pass
             elif token in [42]:
-                self.state = 158
+                self.state = 162
                 self.match(PequePatitoParser.LETRERO)
                 pass
             else:
                 raise NoViableAltException(self)
 
-            self.state = 168
+            self.state = 172
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==34:
-                self.state = 161
+                self.state = 165
                 self.match(PequePatitoParser.COMA)
-                self.state = 164
+                self.state = 168
                 self._errHandler.sync(self)
                 token = self._input.LA(1)
                 if token in [16, 17, 29, 41, 43]:
-                    self.state = 162
+                    self.state = 166
                     self.expresion()
                     pass
                 elif token in [42]:
-                    self.state = 163
+                    self.state = 167
                     self.match(PequePatitoParser.LETRERO)
                     pass
                 else:
                     raise NoViableAltException(self)
 
-                self.state = 170
+                self.state = 174
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -1374,22 +1425,22 @@ class PequePatitoParser ( Parser ):
     def condicion(self):
 
         localctx = PequePatitoParser.CondicionContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 30, self.RULE_condicion)
+        self.enterRule(localctx, 32, self.RULE_condicion)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 171
-            self.match(PequePatitoParser.SI)
-            self.state = 172
-            self.match(PequePatitoParser.PARENTESIS_IZQ)
-            self.state = 173
-            self.expresion()
-            self.state = 174
-            self.match(PequePatitoParser.PARENTESIS_DER)
             self.state = 175
-            self.cuerpo()
+            self.match(PequePatitoParser.SI)
             self.state = 176
-            self.else_part()
+            self.match(PequePatitoParser.PARENTESIS_IZQ)
             self.state = 177
+            self.expresion()
+            self.state = 178
+            self.match(PequePatitoParser.PARENTESIS_DER)
+            self.state = 179
+            self.cuerpo()
+            self.state = 180
+            self.else_part()
+            self.state = 181
             self.match(PequePatitoParser.PUNTO_Y_COMA)
         except RecognitionException as re:
             localctx.exception = re
@@ -1437,16 +1488,16 @@ class PequePatitoParser ( Parser ):
     def else_part(self):
 
         localctx = PequePatitoParser.Else_partContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 32, self.RULE_else_part)
+        self.enterRule(localctx, 34, self.RULE_else_part)
         try:
-            self.state = 182
+            self.state = 186
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [6]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 179
+                self.state = 183
                 self.match(PequePatitoParser.SINO)
-                self.state = 180
+                self.state = 184
                 self.cuerpo()
                 pass
             elif token in [33]:
@@ -1518,22 +1569,22 @@ class PequePatitoParser ( Parser ):
     def ciclo(self):
 
         localctx = PequePatitoParser.CicloContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 34, self.RULE_ciclo)
+        self.enterRule(localctx, 36, self.RULE_ciclo)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 184
-            self.match(PequePatitoParser.MIETRAS)
-            self.state = 185
-            self.match(PequePatitoParser.PARENTESIS_IZQ)
-            self.state = 186
-            self.expresion()
-            self.state = 187
-            self.match(PequePatitoParser.PARENTESIS_DER)
             self.state = 188
-            self.match(PequePatitoParser.HAZ)
+            self.match(PequePatitoParser.MIETRAS)
             self.state = 189
-            self.cuerpo()
+            self.match(PequePatitoParser.PARENTESIS_IZQ)
             self.state = 190
+            self.expresion()
+            self.state = 191
+            self.match(PequePatitoParser.PARENTESIS_DER)
+            self.state = 192
+            self.match(PequePatitoParser.HAZ)
+            self.state = 193
+            self.cuerpo()
+            self.state = 194
             self.match(PequePatitoParser.PUNTO_Y_COMA)
         except RecognitionException as re:
             localctx.exception = re
@@ -1599,37 +1650,37 @@ class PequePatitoParser ( Parser ):
     def llamada(self):
 
         localctx = PequePatitoParser.LlamadaContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 36, self.RULE_llamada)
+        self.enterRule(localctx, 38, self.RULE_llamada)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 192
+            self.state = 196
             self.match(PequePatitoParser.ID)
-            self.state = 193
+            self.state = 197
             self.match(PequePatitoParser.PARENTESIS_IZQ)
-            self.state = 202
+            self.state = 206
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if (((_la) & ~0x3f) == 0 and ((1 << _la) & 10995653345280) != 0):
-                self.state = 194
+                self.state = 198
                 self.expresion()
-                self.state = 199
+                self.state = 203
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
                 while _la==34:
-                    self.state = 195
+                    self.state = 199
                     self.match(PequePatitoParser.COMA)
-                    self.state = 196
+                    self.state = 200
                     self.expresion()
-                    self.state = 201
+                    self.state = 205
                     self._errHandler.sync(self)
                     _la = self._input.LA(1)
 
 
 
-            self.state = 204
+            self.state = 208
             self.match(PequePatitoParser.PARENTESIS_DER)
-            self.state = 205
+            self.state = 209
             self.match(PequePatitoParser.PUNTO_Y_COMA)
         except RecognitionException as re:
             localctx.exception = re
@@ -1681,19 +1732,19 @@ class PequePatitoParser ( Parser ):
     def expresion(self):
 
         localctx = PequePatitoParser.ExpresionContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 38, self.RULE_expresion)
+        self.enterRule(localctx, 40, self.RULE_expresion)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 207
-            self.exp()
             self.state = 211
+            self.exp()
+            self.state = 215
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             if (((_la) & ~0x3f) == 0 and ((1 << _la) & 66060288) != 0):
-                self.state = 208
+                self.state = 212
                 self.bo()
-                self.state = 209
+                self.state = 213
                 self.exp()
 
 
@@ -1754,11 +1805,11 @@ class PequePatitoParser ( Parser ):
     def bo(self):
 
         localctx = PequePatitoParser.BoContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 40, self.RULE_bo)
+        self.enterRule(localctx, 42, self.RULE_bo)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 213
+            self.state = 217
             _la = self._input.LA(1)
             if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 66060288) != 0)):
                 self._errHandler.recoverInline(self)
@@ -1818,21 +1869,21 @@ class PequePatitoParser ( Parser ):
     def exp(self):
 
         localctx = PequePatitoParser.ExpContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 42, self.RULE_exp)
+        self.enterRule(localctx, 44, self.RULE_exp)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 215
+            self.state = 219
             self.termino()
-            self.state = 221
+            self.state = 225
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==16 or _la==17:
-                self.state = 216
+                self.state = 220
                 self.operador()
-                self.state = 217
+                self.state = 221
                 self.termino()
-                self.state = 223
+                self.state = 227
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -1881,11 +1932,11 @@ class PequePatitoParser ( Parser ):
     def operador(self):
 
         localctx = PequePatitoParser.OperadorContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 44, self.RULE_operador)
+        self.enterRule(localctx, 46, self.RULE_operador)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 224
+            self.state = 228
             _la = self._input.LA(1)
             if not(_la==16 or _la==17):
                 self._errHandler.recoverInline(self)
@@ -1945,21 +1996,21 @@ class PequePatitoParser ( Parser ):
     def termino(self):
 
         localctx = PequePatitoParser.TerminoContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 46, self.RULE_termino)
+        self.enterRule(localctx, 48, self.RULE_termino)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 226
+            self.state = 230
             self.factor()
-            self.state = 232
+            self.state = 236
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la==18 or _la==19:
-                self.state = 227
+                self.state = 231
                 self.operador_factor()
-                self.state = 228
+                self.state = 232
                 self.factor()
-                self.state = 234
+                self.state = 238
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
@@ -2008,11 +2059,11 @@ class PequePatitoParser ( Parser ):
     def operador_factor(self):
 
         localctx = PequePatitoParser.Operador_factorContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 48, self.RULE_operador_factor)
+        self.enterRule(localctx, 50, self.RULE_operador_factor)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 235
+            self.state = 239
             _la = self._input.LA(1)
             if not(_la==18 or _la==19):
                 self._errHandler.recoverInline(self)
@@ -2084,41 +2135,41 @@ class PequePatitoParser ( Parser ):
     def factor(self):
 
         localctx = PequePatitoParser.FactorContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 50, self.RULE_factor)
+        self.enterRule(localctx, 52, self.RULE_factor)
         self._la = 0 # Token type
         try:
-            self.state = 245
+            self.state = 249
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [29]:
                 self.enterOuterAlt(localctx, 1)
-                self.state = 237
+                self.state = 241
                 self.match(PequePatitoParser.PARENTESIS_IZQ)
-                self.state = 238
+                self.state = 242
                 self.expresion()
-                self.state = 239
+                self.state = 243
                 self.match(PequePatitoParser.PARENTESIS_DER)
                 pass
             elif token in [16, 17]:
                 self.enterOuterAlt(localctx, 2)
-                self.state = 241
+                self.state = 245
                 _la = self._input.LA(1)
                 if not(_la==16 or _la==17):
                     self._errHandler.recoverInline(self)
                 else:
                     self._errHandler.reportMatch(self)
                     self.consume()
-                self.state = 242
+                self.state = 246
                 self.cte()
                 pass
             elif token in [43]:
                 self.enterOuterAlt(localctx, 3)
-                self.state = 243
+                self.state = 247
                 self.match(PequePatitoParser.ID)
                 pass
             elif token in [41]:
                 self.enterOuterAlt(localctx, 4)
-                self.state = 244
+                self.state = 248
                 self.match(PequePatitoParser.NUMERO)
                 pass
             else:
@@ -2169,11 +2220,11 @@ class PequePatitoParser ( Parser ):
     def tipo(self):
 
         localctx = PequePatitoParser.TipoContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 52, self.RULE_tipo)
+        self.enterRule(localctx, 54, self.RULE_tipo)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 247
+            self.state = 251
             _la = self._input.LA(1)
             if not(_la==10 or _la==11):
                 self._errHandler.recoverInline(self)
@@ -2228,11 +2279,11 @@ class PequePatitoParser ( Parser ):
     def cte(self):
 
         localctx = PequePatitoParser.CteContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 54, self.RULE_cte)
+        self.enterRule(localctx, 56, self.RULE_cte)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 249
+            self.state = 253
             _la = self._input.LA(1)
             if not((((_la) & ~0x3f) == 0 and ((1 << _la) & 3848290697216) != 0)):
                 self._errHandler.recoverInline(self)

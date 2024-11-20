@@ -33,11 +33,16 @@ class PilasCuadruplos:
 
     def push_salto(self, salto):
         self.pila_saltos.append(salto)
+        print(f"Push a pila_saltos: {salto}. Estado actual: {self.pila_saltos}")
 
     def pop_salto(self):
         if self.pila_saltos:
-            return self.pila_saltos.pop()
-        return None
+            salto = self.pila_saltos.pop()
+            print(f"Pop de pila_saltos: {salto}. Estado actual: {self.pila_saltos}")
+            return salto
+        else:
+            print("Intento de pop en pila_saltos vacía")
+            return None
 
     def pop_salto_indice(self, indice):
         return self.pila_saltos.pop(indice)

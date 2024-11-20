@@ -1,7 +1,8 @@
 grammar PequePatito;
 
 // Regla inicial del programa
-programa : p v f INICIO cuerpo FIN;
+programa : p v f inicio cuerpo FIN;
+inicio: INICIO;
 p: PROGRAMA ID PUNTO_Y_COMA;
 v : VARS var_declaracion*;  // Declaración múltiple de variables
 

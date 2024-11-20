@@ -5,9 +5,10 @@ from gen.PequePatitoLexer import PequePatitoLexer
 from gen.PequePatitoParser import PequePatitoParser
 from cubo_semantico import CuboSemantico
 from estructura_directorio import TablaVariables, DirectorioFunciones
+from maquina_virtual import MaquinaVirtual
 from peque_patito_listener import PequePatitoListener
 #from maquina_virtual import MaquinaVirtual
-import trace
+import traceback
 
 programa = '''
 programa miPrograma;
@@ -88,12 +89,12 @@ try:
     # Imprimir la fila de cuadruplos
     listener.fila_cuadruplos.imprimir_cuadruplos()
 
-    # # Ejecutar la máquina virtual
-    # print("\n--- Ejecución de la Máquina Virtual ---")
-    # vm = MaquinaVirtual(listener.fila_cuadruplos.cuadruplos, listener.tabla_constantes)
-    # vm.ejecutar()
+     # Ejecutar la máquina virtual
+    print("\n--- Ejecución de la Máquina Virtual ---")
+    vm = MaquinaVirtual(listener.fila_cuadruplos.cuadruplos, listener.tabla_constantes, tabla_variables)
+    vm.ejecutar()
 
 except Exception as e:
     print(f"Error durante el análisis léxico/sintáctico: {e}")
-    trace.print_exc()
+    traceback.print_exc()
     sys.exit(1)

@@ -1,6 +1,4 @@
-# peque_patito_listener.py
-
-from antlr4 import ParseTreeListener, TerminalNode
+from antlr4 import ParseTreeListener
 from pilas_cuadruplos import PilasCuadruplos
 from fila_cuadruplos import FilaCuadruplos
 from gen.PequePatitoParser import PequePatitoParser
@@ -22,6 +20,7 @@ class PequePatitoListener(ParseTreeListener):
         self.cont_temp = 0
         self.tabla_constantes = TablaConstantes()
         self.fila_cuadruplos.agregar_cuadruplo('GOTO', None, None, None)
+        self.memoria_ejecucion = {}
 
     def generar_temporal(self, tipo):
         direccion = self.tabla_variables.contadores['temporal'][tipo]
@@ -33,6 +32,18 @@ class PequePatitoListener(ParseTreeListener):
 
     def exitPrograma(self, ctx: PequePatitoParser.ProgramaContext):
         self.fila_cuadruplos.agregar_cuadruplo('END', None, None, None)
+
+    def enterInicio(self, ctx: PequePatitoParser.InicioContext):
+        if self.ambito_actual == 'global' and not hasattr(self, 'main_goto_updated'):
+            # Actualizar el cuádruplo GOTO inicial con la dirección actual
+            self.fila_cuadruplos.cuadruplos[0] = (
+                'GOTO',
+                None,
+                None,
+                len(self.fila_cuadruplos.cuadruplos)
+            )
+            self.main_goto_updated = True
+
 
     # Métodos para manejar declaraciones de variables
     def enterVar_declaracion(self, ctx: PequePatitoParser.Var_declaracionContext):
@@ -95,7 +106,7 @@ class PequePatitoListener(ParseTreeListener):
     def exitFuncs(self, ctx: PequePatitoParser.FuncsContext):
         self.pila_scopes.pop()
         self.ambito_actual = self.pila_scopes[-1]
-        self.fila_cuadruplos.agregar_cuadruplo('ENDPROC', None, None, None)
+        # self.fila_cuadruplos.agregar_cuadruplo('ENDPROC', None, None, None)
 
     def enterFactor(self, ctx: PequePatitoParser.FactorContext):
         if ctx.ID():
@@ -130,7 +141,15 @@ class PequePatitoListener(ParseTreeListener):
             else:
                 self.errores.append(f"Error: Variable '{nombre_var}' no declarada en el ámbito '{self.ambito_actual}'.")
         elif ctx.expresion():
-            pass
+            pass  # No se hace nada especial aquí
+        else:
+            # Agregar manejo para VERDADERO y FALSO (si aplica)
+            if ctx.VERDADERO() or ctx.FALSO():
+                valor = ctx.getText()
+                tipo = 'booleano'
+                direccion = self.tabla_constantes.agregar_constante(valor, tipo)
+                self.pilas.push_operando(direccion)
+                self.pilas.push_tipo(tipo)
 
     def enterOperador(self, ctx: PequePatitoParser.OperadorContext):
         operador = ctx.getText()
@@ -151,10 +170,12 @@ class PequePatitoListener(ParseTreeListener):
             tipo_derecho = self.pilas.pop_tipo()
             operando_izquierdo = self.pilas.pop_operando()
             tipo_izquierdo = self.pilas.pop_tipo()
-
+            print(f"Operación: {operando_izquierdo} {operador} {operando_derecho}")
+            print(f"Tipos: {tipo_izquierdo}, {tipo_derecho}")
             tipo_resultado = self.cubo_semantico.obtener_tipo(tipo_izquierdo, tipo_derecho, operador)
             if tipo_resultado == 'error':
-                self.errores.append(f"Error de tipos: No se puede aplicar operador '{operador}' a tipos '{tipo_izquierdo}' y '{tipo_derecho}'.")
+                self.errores.append(
+                    f"Error de tipos: No se puede aplicar operador '{operador}' a tipos '{tipo_izquierdo}' y '{tipo_derecho}'.")
             else:
                 temp_direccion = self.generar_temporal(tipo_resultado)
                 self.fila_cuadruplos.agregar_cuadruplo(operador, operando_izquierdo, operando_derecho, temp_direccion)
@@ -170,7 +191,8 @@ class PequePatitoListener(ParseTreeListener):
             tipo_izquierdo = self.pilas.pop_tipo()
             tipo_resultado = self.cubo_semantico.obtener_tipo(tipo_izquierdo, tipo_derecho, operador)
             if tipo_resultado == 'error':
-                self.errores.append(f"Error de tipos: No se puede aplicar operador '{operador}' a tipos '{tipo_izquierdo}' y '{tipo_derecho}'.")
+                self.errores.append(
+                    f"Error de tipos: No se puede aplicar operador '{operador}' a tipos '{tipo_izquierdo}' y '{tipo_derecho}'.")
             else:
                 temp_direccion = self.generar_temporal(tipo_resultado)
                 self.pilas.push_operando(temp_direccion)
@@ -184,17 +206,20 @@ class PequePatitoListener(ParseTreeListener):
             tipo_derecho = self.pilas.pop_tipo()
             operando_izquierdo = self.pilas.pop_operando()
             tipo_izquierdo = self.pilas.pop_tipo()
-
             tipo_resultado = self.cubo_semantico.obtener_tipo(tipo_izquierdo, tipo_derecho, operador)
             if tipo_resultado == 'error':
-                self.errores.append(f"Error de tipos: No se puede aplicar operador relacional '{operador}' a tipos '{tipo_izquierdo}' y '{tipo_derecho}'.")
+                self.errores.append(
+                    f"Error de tipos: No se puede aplicar operador relacional '{operador}' a tipos '{tipo_izquierdo}' y '{tipo_derecho}'.")
             else:
                 temp_direccion = self.generar_temporal(tipo_resultado)
                 self.pilas.push_operando(temp_direccion)
                 self.pilas.push_tipo(tipo_resultado)
                 self.fila_cuadruplos.agregar_cuadruplo(operador, operando_izquierdo, operando_derecho, temp_direccion)
+                print(f"Operando izquierdo: {operando_izquierdo}, Tipo: {tipo_izquierdo}")
+                print(f"Operando derecho: {operando_derecho}, Tipo: {tipo_derecho}")
 
         if self.es_expresion_de_condicion(ctx):
+            print("Detectada expresión de condición en exitExpresion")
             resultado = self.pilas.pop_operando()
             tipo = self.pilas.pop_tipo()
             if tipo != 'booleano':
@@ -202,22 +227,29 @@ class PequePatitoListener(ParseTreeListener):
             else:
                 self.fila_cuadruplos.agregar_cuadruplo('GOTOF', resultado, None, None)
                 self.pilas.push_salto(len(self.fila_cuadruplos.cuadruplos) - 1)
-                print("Se generó cuádruplo GOTOF en condición")
+                print(f"Se generó cuádruplo GOTOF en condición, índice: {len(self.fila_cuadruplos.cuadruplos) - 1}")
         elif self.es_expresion_de_ciclo(ctx):
+            print("Detectada expresión de ciclo en exitExpresion")
             resultado = self.pilas.pop_operando()
             tipo = self.pilas.pop_tipo()
             if tipo != 'booleano':
-                self.errores.append(f"Error: La condición del ciclo debe ser de tipo booleano, pero es de tipo '{tipo}'.")
+                self.errores.append(f"Error: La condición del ciclo debe ser de tipo booleano, pero es '{tipo}'.")
             else:
                 self.fila_cuadruplos.agregar_cuadruplo('GOTOF', resultado, None, None)
                 self.pilas.push_salto(len(self.fila_cuadruplos.cuadruplos) - 1)
-                print("Se generó cuádruplo GOTOF en ciclo")
+                print(f"Se generó cuádruplo GOTOF en ciclo, índice: {len(self.fila_cuadruplos.cuadruplos) - 1}")
 
     # Métodos para manejar asignaciones
     def exitAsigna(self, ctx: PequePatitoParser.AsignaContext):
         variable = ctx.ID().getText()
+        print(f"Asignando a variable '{variable}'")
+        print(f"Pila de operandos antes de pop: {self.pilas.pila_operandos}")
+        print(f"Pila de tipos antes de pop: {self.pilas.pila_tipos}")
         valor = self.pilas.pop_operando()
         tipo_valor = self.pilas.pop_tipo()
+        if valor is None or tipo_valor is None:
+            self.errores.append(f"Error: Valor o tipo no válido al asignar a la variable '{variable}'.")
+            return
         variable_info = self.tabla_variables.obtener_variable(variable, self.ambito_actual)
         if not variable_info:
             variable_info = self.tabla_variables.obtener_variable(variable, "global")
@@ -228,7 +260,8 @@ class PequePatitoListener(ParseTreeListener):
             direccion_variable = variable_info['direccion']
             tipo_resultado = self.cubo_semantico.obtener_tipo(tipo_variable, tipo_valor, '=')
             if tipo_resultado == 'error':
-                self.errores.append(f"Error de tipos: No se puede asignar tipo '{tipo_valor}' a variable '{variable}' de tipo '{tipo_variable}'.")
+                self.errores.append(
+                    f"Error de tipos: No se puede asignar tipo '{tipo_valor}' a variable '{variable}' de tipo '{tipo_variable}'.")
             else:
                 self.fila_cuadruplos.agregar_cuadruplo('=', valor, None, direccion_variable)
 
@@ -255,45 +288,82 @@ class PequePatitoListener(ParseTreeListener):
         pass  # Nada que hacer al entrar a la condición
 
     def exitCondicion(self, ctx: PequePatitoParser.CondicionContext):
-        if not self.pilas.pila_saltos:
-            self.errores.append(f"Error: Pila de saltos está vacía antes de hacer pop en exitCondicion.")
-            return
-        end = self.pilas.pop_salto()
-        self.fila_cuadruplos.cuadruplos[end] = (self.fila_cuadruplos.cuadruplos[end][0], self.fila_cuadruplos.cuadruplos[end][1], None, len(self.fila_cuadruplos.cuadruplos))
+        print(f"Llamando a exitCondicion. Pila de saltos antes de pop: {self.pilas.pila_saltos}")
+        if ctx.else_part():
+            # Si hay una parte else, los pops ya se manejaron
+            pass
+        else:
+            # No hay else_part, realizamos el pop de la pila de saltos
+            if not self.pilas.pila_saltos:
+                self.errores.append("Error: Pila de saltos está vacía antes de hacer pop en exitCondicion.")
+                return
+            end = self.pilas.pop_salto()
+            # Actualizar el cuádruplo GOTOF con la dirección correcta
+            self.fila_cuadruplos.cuadruplos[end] = (
+                self.fila_cuadruplos.cuadruplos[end][0],
+                self.fila_cuadruplos.cuadruplos[end][1],
+                self.fila_cuadruplos.cuadruplos[end][2],
+                len(self.fila_cuadruplos.cuadruplos)
+            )
 
     def enterElse_part(self, ctx: PequePatitoParser.Else_partContext):
+        # Generar GOTO y hacer push a pila_saltos
         self.fila_cuadruplos.agregar_cuadruplo('GOTO', None, None, None)
         goto_indice = len(self.fila_cuadruplos.cuadruplos) - 1
         self.pilas.push_salto(goto_indice)
-
-        falso = self.pilas.pop_salto_indice(-2)
-        self.fila_cuadruplos.cuadruplos[falso] = (self.fila_cuadruplos.cuadruplos[falso][0], self.fila_cuadruplos.cuadruplos[falso][1], None, len(self.fila_cuadruplos.cuadruplos))
+        # Pop del índice del GOTOF y actualizarlo al inicio del else
+        if not self.pilas.pila_saltos:
+            self.errores.append("Error: Pila de saltos está vacía antes de hacer pop en enterElse_part.")
+            return
+        falso = self.pilas.pop_salto()
+        self.fila_cuadruplos.cuadruplos[falso] = (
+            self.fila_cuadruplos.cuadruplos[falso][0],
+            self.fila_cuadruplos.cuadruplos[falso][1],
+            self.fila_cuadruplos.cuadruplos[falso][2],
+            len(self.fila_cuadruplos.cuadruplos)
+        )
 
     def exitElse_part(self, ctx: PequePatitoParser.Else_partContext):
-        pass  # Nada que hacer al salir de la parte 'sino'
+        # Pop del índice del GOTO y actualizarlo al final del else
+        if not self.pilas.pila_saltos:
+            self.errores.append("Error: Pila de saltos está vacía antes de hacer pop en exitElse_part.")
+            return
+        end = self.pilas.pop_salto()
+        self.fila_cuadruplos.cuadruplos[end] = (
+            self.fila_cuadruplos.cuadruplos[end][0],
+            self.fila_cuadruplos.cuadruplos[end][1],
+            self.fila_cuadruplos.cuadruplos[end][2],
+            len(self.fila_cuadruplos.cuadruplos)
+        )
 
     # Métodos para manejar ciclos
     def enterCiclo(self, ctx: PequePatitoParser.CicloContext):
+        # Push del inicio del ciclo
         self.pilas.push_salto(len(self.fila_cuadruplos.cuadruplos))
 
     def exitCiclo(self, ctx: PequePatitoParser.CicloContext):
         falso = self.pilas.pop_salto()
         retorno = self.pilas.pop_salto()
         self.fila_cuadruplos.agregar_cuadruplo('GOTO', None, None, retorno)
-        self.fila_cuadruplos.cuadruplos[falso] = (self.fila_cuadruplos.cuadruplos[falso][0], self.fila_cuadruplos.cuadruplos[falso][1], None, len(self.fila_cuadruplos.cuadruplos))
+        # Actualizar el cuádruplo GOTOF con la dirección después del ciclo
+        self.fila_cuadruplos.cuadruplos[falso] = (
+            self.fila_cuadruplos.cuadruplos[falso][0],
+            self.fila_cuadruplos.cuadruplos[falso][1],
+            self.fila_cuadruplos.cuadruplos[falso][2],
+            len(self.fila_cuadruplos.cuadruplos)
+        )
 
+    # Funciones corregidas para identificar expresiones de condición y ciclo
     def es_expresion_de_condicion(self, ctx):
         parent_ctx = ctx.parentCtx
-        while parent_ctx:
-            if isinstance(parent_ctx, PequePatitoParser.CondicionContext) and ctx == parent_ctx.expresion():
-                return True
-            parent_ctx = parent_ctx.parentCtx
+        if isinstance(parent_ctx, PequePatitoParser.CondicionContext):
+            # Verificar si la expresión es la condición del 'if'
+            return parent_ctx.expresion() == ctx
         return False
 
     def es_expresion_de_ciclo(self, ctx):
         parent_ctx = ctx.parentCtx
-        while parent_ctx:
-            if isinstance(parent_ctx, PequePatitoParser.CicloContext) and ctx == parent_ctx.expresion():
-                return True
-            parent_ctx = parent_ctx.parentCtx
+        if isinstance(parent_ctx, PequePatitoParser.CicloContext):
+            # Verificar si la expresión es la condición del 'mientras'
+            return parent_ctx.expresion() == ctx
         return False

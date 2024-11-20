@@ -17,6 +17,15 @@ class PequePatitoListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by PequePatitoParser#inicio.
+    def enterInicio(self, ctx:PequePatitoParser.InicioContext):
+        pass
+
+    # Exit a parse tree produced by PequePatitoParser#inicio.
+    def exitInicio(self, ctx:PequePatitoParser.InicioContext):
+        pass
+
+
     # Enter a parse tree produced by PequePatitoParser#p.
     def enterP(self, ctx:PequePatitoParser.PContext):
         pass
