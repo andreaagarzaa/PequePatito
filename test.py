@@ -6,7 +6,7 @@ from gen.PequePatitoParser import PequePatitoParser
 from cubo_semantico import CuboSemantico
 from estructura_directorio import TablaVariables, DirectorioFunciones
 from peque_patito_listener import PequePatitoListener
-from maquina_virtual import MaquinaVirtual
+#from maquina_virtual import MaquinaVirtual
 import trace
 
 programa = '''
