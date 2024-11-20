@@ -38,22 +38,26 @@ ciclo: MIETRAS PARENTESIS_IZQ expresion PARENTESIS_DER HAZ cuerpo PUNTO_Y_COMA; 
 llamada: ID PARENTESIS_IZQ (expresion (COMA expresion)*)? PARENTESIS_DER PUNTO_Y_COMA; // Llamada a función
 
 // Expresiones y operadores
-expresion : bo | logica;
-bo: exp (op_relacional exp)?;
-logica : logica op_logico logica
-       | NOT logica
-       | bo
-       ;
-op_relacional : MAYOR | MENOR | IGUAL | DIFERENTE;
-op_logico : AND | OR;
-exp : termino ((SUMA | RESTA) termino)*  ;
-termino:  factor ((MULTIPLICACION| DIVISION) factor)* ;
-factor : PARENTESIS_IZQ expresion PARENTESIS_DER | f_otro;
-f_otro: (SUMA | RESTA)?  (ID | cte);
+//expresion : bo | logica;
+//bo: exp (op_relacional exp)?;
+//logica : logica op_logico logica
+//       | NOT logica
+//       | bo
+//       ;
+//op_relacional : MAYOR | MENOR | IGUAL | DIFERENTE;
+//op_logico : AND | OR;
+expresion: exp (bo exp)?;
+bo: MAYOR | MENOR | MAYOR_IGUAL | MENOR_IGUAL | DIFERENTE | IGUAL_IGUAL;
+
+exp : termino (operador termino)*  ;
+operador : SUMA | RESTA;
+termino:  factor (operador_factor factor)* ;
+operador_factor : MULTIPLICACION | DIVISION;
+factor : PARENTESIS_IZQ expresion PARENTESIS_DER | (SUMA | RESTA) cte |  ID | NUMERO;
 
 // Tipos y literales
-tipo : ENT | FLOT | BOOL;
-cte : CTE_ENT | CTE_FLOT | VERDADERO | FALSO;
+tipo : ENT | FLOT;
+cte : CTE_ENT | CTE_FLOT | NUMERO;
 
 // ---------------------------------------------------
 // 1. Palabras clave del lenguaje
@@ -91,7 +95,10 @@ DIVISION: '/';                   // División
 // Operadores de Comparación
 MAYOR: '>';                     // Mayor que
 MENOR: '<';                      // Menor que
-IGUAL: '==';                     // Igual
+MAYOR_IGUAL: '>=';               // Mayor o igual
+MENOR_IGUAL: '<=';               // Menor o igual
+IGUAL_IGUAL: '==';               // Igual
+//IGUAL: '==';                     // Igual
 DIFERENTE: '!=';                 // Diferente
 
 // Operadores Lógicos
@@ -114,8 +121,9 @@ BRACKET_DER: ']';                // Corchete derecho
 // ---------------------------------------------------
 // 4. Identificadores y Literales
 // ---------------------------------------------------
-CTE_ENT: [0-9]+;                 // Constantes enteras
-CTE_FLOT: [0-9]+ '.' [0-9]+;     // Constantes flotantes
+CTE_ENT: 'cte_ent';                 // Constantes enteras
+CTE_FLOT: 'cte_float';     // Constantes flotantes
+NUMERO: [0-9]+ ('.' [0-9]+)?;
 LETRERO: '"' ~["\r\n]* '"';      // Literales de cadena
 
 // ---------------------------------------------------

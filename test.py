@@ -1,5 +1,4 @@
 # test.py
-
 import sys
 from antlr4 import *
 from gen.PequePatitoLexer import PequePatitoLexer
@@ -7,6 +6,7 @@ from gen.PequePatitoParser import PequePatitoParser
 from cubo_semantico import CuboSemantico
 from estructura_directorio import TablaVariables, DirectorioFunciones
 from peque_patito_listener import PequePatitoListener
+import trace
 
 programa = '''
 programa miPrograma;
@@ -81,9 +81,13 @@ try:
     tabla_variables.imprimir_tabla()
     directorio_funciones.imprimir_directorio()
 
+    # Imprimir la tabla de constantes
+    listener.tabla_constantes.imprimir_constantes()
+
     # Imprimir la fila de cuadruplos
     listener.fila_cuadruplos.imprimir_cuadruplos()
 
 except Exception as e:
     print(f"Error durante el análisis léxico/sintáctico: {e}")
+    trace.print_exc()
     sys.exit(1)

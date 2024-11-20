@@ -2,22 +2,39 @@
 
 class TablaVariables:
     def __init__(self):
-        # Diccionario con el ámbito como clave y otro diccionario de variables como valor
+        # Diccionario que almacena variables por ámbito
         self.variables = {"global": {}}
+        # Contadores para asignar direcciones de memoria según el tipo y ámbito
+        self.contadores = {
+            'global': {'entero': 1000, 'flotante': 2000},
+            'local': {'entero': 3000, 'flotante': 4000},
+            'temporal': {'entero': 5000, 'flotante': 6000}
+        }
 
     def agregar_variable(self, nombre, tipo, ambito):
         if ambito not in self.variables:
             self.variables[ambito] = {}
-        self.variables[ambito][nombre] = {'tipo': tipo}
+        if nombre in self.variables[ambito]:
+            return False  # La variable ya existe en el ámbito
+        # Seleccionar el contador adecuado según el ámbito y tipo
+        if ambito == 'global':
+            direccion = self.contadores['global'][tipo]
+            self.contadores['global'][tipo] += 1
+        else:
+            direccion = self.contadores['local'][tipo]
+            self.contadores['local'][tipo] += 1
+        # Agregar la variable con su tipo y dirección
+        self.variables[ambito][nombre] = {'tipo': tipo, 'direccion': direccion}
+        return True
 
-    def obtener_tipo_variable(self, nombre, ambito):
-        # Buscar en el ámbito actual
+    def obtener_variable(self, nombre, ambito):
+        # Buscar la variable en el ámbito actual
         if nombre in self.variables.get(ambito, {}):
-            return self.variables[ambito][nombre]['tipo']
-        # Buscar en el ámbito global si no se encuentra
+            return self.variables[ambito][nombre]
+        # Si no se encuentra, buscar en el ámbito global
         if nombre in self.variables.get("global", {}):
-            return self.variables["global"][nombre]['tipo']
-        return None
+            return self.variables["global"][nombre]
+        return None  # Variable no encontrada
 
     def imprimir_tabla(self):
         print("==== Tablas de Variables ====\n")
@@ -29,17 +46,17 @@ class TablaVariables:
 
 class DirectorioFunciones:
     def __init__(self):
-        # Diccionario de funciones con sus atributos
+        # Diccionario que almacena funciones con sus atributos
         self.funciones = {"global": {"tipo_retorno": "nula", "parametros": [], "variables_locales": {}, "cuadruplo_inicio": None}}
 
-    def agregar_funcion(self, nombre, tipo_retorno, parametros):
+    def agregar_funcion(self, nombre, tipo_retorno, parametros, variables_locales={}, cuadruplo_inicio=None):
         if nombre in self.funciones:
-            return False  # Función ya existe
+            return False  # La función ya existe
         self.funciones[nombre] = {
             "tipo_retorno": tipo_retorno,
             "parametros": parametros,
-            "variables_locales": {},
-            "cuadruplo_inicio": None
+            "variables_locales": variables_locales,
+            "cuadruplo_inicio": cuadruplo_inicio
         }
         return True
 

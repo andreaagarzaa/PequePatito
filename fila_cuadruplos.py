@@ -8,6 +8,10 @@ class FilaCuadruplos:
         cuadruplo = (operador, op1, op2, resultado)
         self.cuadruplos.append(cuadruplo)
 
+    def agregar_cuadruplo_indice(self, operador, op1, op2, resultado, indice):
+        cuadruplo = (operador, op1, op2, resultado)
+        self.cuadruplos.insert(indice, cuadruplo)
+
     def imprimir_cuadruplos(self):
         print("==== Cuádruplos Generados ====")
         for idx, cuadruplo in enumerate(self.cuadruplos):

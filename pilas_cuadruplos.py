@@ -38,3 +38,6 @@ class PilasCuadruplos:
         if self.pila_saltos:
             return self.pila_saltos.pop()
         return None
+
+    def pop_salto_indice(self, indice):
+        return self.pila_saltos.pop(indice)
