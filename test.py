@@ -7,7 +7,6 @@ from cubo_semantico import CuboSemantico
 from estructura_directorio import TablaVariables, DirectorioFunciones
 from maquina_virtual import MaquinaVirtual
 from peque_patito_listener import PequePatitoListener
-#from maquina_virtual import MaquinaVirtual
 import traceback
 
 programa = '''
@@ -38,7 +37,7 @@ inicio{
     };
     mientras (x < 50) haz {
         holi = 3;
-        x = x + 5;
+        x = x + 10;
         escribe("x ahora es: ", x);
     };
     miFuncion(x, y);
@@ -89,9 +88,9 @@ try:
     # Imprimir la fila de cuadruplos
     listener.fila_cuadruplos.imprimir_cuadruplos()
 
-     # Ejecutar la máquina virtual
+    # Ejecutar la máquina virtual
     print("\n--- Ejecución de la Máquina Virtual ---")
-    vm = MaquinaVirtual(listener.fila_cuadruplos.cuadruplos, listener.tabla_constantes, tabla_variables)
+    vm = MaquinaVirtual(listener.fila_cuadruplos.cuadruplos, listener.tabla_constantes, tabla_variables, directorio_funciones)
     vm.ejecutar()
 
 except Exception as e:

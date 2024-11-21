@@ -1,3 +1,5 @@
+# peque_patito_listener.py
+
 from antlr4 import ParseTreeListener
 from pilas_cuadruplos import PilasCuadruplos
 from fila_cuadruplos import FilaCuadruplos
@@ -21,6 +23,8 @@ class PequePatitoListener(ParseTreeListener):
         self.tabla_constantes = TablaConstantes()
         self.fila_cuadruplos.agregar_cuadruplo('GOTO', None, None, None)
         self.memoria_ejecucion = {}
+        self.funcion_actual = None
+        self.param_contador = 0
 
     def generar_temporal(self, tipo):
         direccion = self.tabla_variables.contadores['temporal'][tipo]
@@ -43,7 +47,6 @@ class PequePatitoListener(ParseTreeListener):
                 len(self.fila_cuadruplos.cuadruplos)
             )
             self.main_goto_updated = True
-
 
     # Métodos para manejar declaraciones de variables
     def enterVar_declaracion(self, ctx: PequePatitoParser.Var_declaracionContext):
@@ -83,15 +86,10 @@ class PequePatitoListener(ParseTreeListener):
                     if ':' in param:
                         param_nombre, param_tipo = param.split(':')
                         parametros.append({'nombre': param_nombre, 'tipo': param_tipo})
-                        # Agregar parámetro a la tabla de variables
-                        self.tabla_variables.agregar_variable(param_nombre, param_tipo, nombre_funcion)
-                        variable_info = self.tabla_variables.obtener_variable(param_nombre, nombre_funcion)
-                        direccion = variable_info['direccion']
-                        # Agregar parámetro a las variables locales de la función
-                        variables_locales[param_nombre] = {'tipo': param_tipo, 'direccion': direccion}
                     else:
                         self.errores.append(f"Error: Error en declaración de parámetros de función '{nombre_funcion}'.")
 
+            # Agregar la función al directorio
             self.directorio_funciones.agregar_funcion(
                 nombre_funcion,
                 tipo_retorno,
@@ -99,14 +97,29 @@ class PequePatitoListener(ParseTreeListener):
                 variables_locales,  # Variables locales incluyen parámetros
                 len(self.fila_cuadruplos.cuadruplos)
             )
+            # Generar cuádruplo de inicio de función
+            self.fila_cuadruplos.agregar_cuadruplo('FUNC', nombre_funcion, None, None)
             self.ambito_actual = nombre_funcion
             self.pila_scopes.append(nombre_funcion)
             print(f"Entrando a la función '{nombre_funcion}' con tipo de retorno '{tipo_retorno}'")
 
+            # Agregar parámetros a la tabla de variables
+            for param in parametros:
+                param_nombre = param['nombre']
+                param_tipo = param['tipo']
+                if not self.tabla_variables.agregar_variable(param_nombre, param_tipo, nombre_funcion):
+                    self.errores.append(
+                        f"Error: Parámetro '{param_nombre}' ya declarado en la función '{nombre_funcion}'.")
+                else:
+                    variable_info = self.tabla_variables.obtener_variable(param_nombre, nombre_funcion)
+                    direccion = variable_info['direccion']
+                    # Agregar parámetro a las variables locales de la función
+                    variables_locales[param_nombre] = {'tipo': param_tipo, 'direccion': direccion}
+
     def exitFuncs(self, ctx: PequePatitoParser.FuncsContext):
+        self.fila_cuadruplos.agregar_cuadruplo('ENDPROC', None, None, None)
         self.pila_scopes.pop()
         self.ambito_actual = self.pila_scopes[-1]
-        # self.fila_cuadruplos.agregar_cuadruplo('ENDPROC', None, None, None)
 
     def enterFactor(self, ctx: PequePatitoParser.FactorContext):
         if ctx.ID():
@@ -148,6 +161,13 @@ class PequePatitoListener(ParseTreeListener):
                 valor = ctx.getText()
                 tipo = 'booleano'
                 direccion = self.tabla_constantes.agregar_constante(valor, tipo)
+                self.pilas.push_operando(direccion)
+                self.pilas.push_tipo(tipo)
+            elif ctx.llamada():
+                # Si el factor es una llamada a función
+                # Asumimos que el resultado de la función se almacena en una dirección temporal
+                tipo = self.tipo_funcion_llamada
+                direccion = self.direccion_funcion_llamada
                 self.pilas.push_operando(direccion)
                 self.pilas.push_tipo(tipo)
 
@@ -238,6 +258,22 @@ class PequePatitoListener(ParseTreeListener):
                 self.fila_cuadruplos.agregar_cuadruplo('GOTOF', resultado, None, None)
                 self.pilas.push_salto(len(self.fila_cuadruplos.cuadruplos) - 1)
                 print(f"Se generó cuádruplo GOTOF en ciclo, índice: {len(self.fila_cuadruplos.cuadruplos) - 1}")
+        elif self.is_in_function_call():
+            # Manejo de parámetros en llamada a función
+            param_value = self.pilas.pop_operando()
+            param_type = self.pilas.pop_tipo()
+            nombre_funcion = self.funcion_actual
+            funcion_info = self.directorio_funciones.funciones[nombre_funcion]
+            if self.param_contador >= len(funcion_info['parametros']):
+                self.errores.append(f"Error: La función '{nombre_funcion}' no esperaba más parámetros.")
+                return
+            expected_param = funcion_info['parametros'][self.param_contador]
+            expected_type = expected_param['tipo']
+            if param_type != expected_type:
+                self.errores.append(f"Error: El parámetro {self.param_contador+1} de la función '{nombre_funcion}' esperaba un '{expected_type}', pero se recibió un '{param_type}'.")
+            # Generar cuádruplo PARAM
+            self.fila_cuadruplos.agregar_cuadruplo('PARAM', param_value, None, f"param{self.param_contador+1}")
+            self.param_contador += 1
 
     # Métodos para manejar asignaciones
     def exitAsigna(self, ctx: PequePatitoParser.AsignaContext):
@@ -353,11 +389,11 @@ class PequePatitoListener(ParseTreeListener):
             len(self.fila_cuadruplos.cuadruplos)
         )
 
-    # Funciones corregidas para identificar expresiones de condición y ciclo
+    # Funciones para identificar expresiones de condición y ciclo
     def es_expresion_de_condicion(self, ctx):
         parent_ctx = ctx.parentCtx
         if isinstance(parent_ctx, PequePatitoParser.CondicionContext):
-            # Verificar si la expresión es la condición del 'if'
+            # Verificar si la expresión es la condición del 'si'
             return parent_ctx.expresion() == ctx
         return False
 
@@ -367,3 +403,42 @@ class PequePatitoListener(ParseTreeListener):
             # Verificar si la expresión es la condición del 'mientras'
             return parent_ctx.expresion() == ctx
         return False
+
+    # Métodos para manejar llamadas a funciones
+    def enterLlamada(self, ctx: PequePatitoParser.LlamadaContext):
+        nombre_funcion = ctx.ID().getText()
+        if nombre_funcion not in self.directorio_funciones.funciones:
+            self.errores.append(f"Error: La función '{nombre_funcion}' no está definida.")
+            return
+        # Start parameter counting
+        self.funcion_actual = nombre_funcion
+        self.param_contador = 0
+        # Generate ERA quadruple
+        self.fila_cuadruplos.agregar_cuadruplo('ERA', nombre_funcion, None, None)
+
+    def exitLlamada(self, ctx: PequePatitoParser.LlamadaContext):
+        nombre_funcion = ctx.ID().getText()
+        funcion_info = self.directorio_funciones.funciones[nombre_funcion]
+        num_params = len(funcion_info['parametros'])
+        if self.param_contador != num_params:
+            self.errores.append(f"Error: La función '{nombre_funcion}' esperaba {num_params} parámetros, pero se proporcionaron {self.param_contador}.")
+        # Generate GOSUB quadruple
+        cuadruplo_inicio = funcion_info['cuadruplo_inicio']
+        self.fila_cuadruplos.agregar_cuadruplo('GOSUB', nombre_funcion, None, cuadruplo_inicio)
+        # Si la función tiene tipo de retorno distinto de 'nula', manejar el valor de retorno
+        tipo_retorno = funcion_info['tipo_retorno']
+        if tipo_retorno != 'nula':
+            temp_direccion = self.generar_temporal(tipo_retorno)
+            self.direccion_funcion_llamada = temp_direccion
+            self.tipo_funcion_llamada = tipo_retorno
+            # No se genera cuádruplo para asignar valor de retorno ya que no manejamos retornos
+        else:
+            # Si la función no retorna valor, limpiar variables temporales
+            self.direccion_funcion_llamada = None
+            self.tipo_funcion_llamada = None
+        # Reset function call tracking
+        self.funcion_actual = None
+        self.param_contador = 0
+
+    def is_in_function_call(self):
+        return self.funcion_actual is not None
