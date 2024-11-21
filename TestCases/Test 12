@@ -1,0 +1,8 @@
+programa TestUndefinedFunction;
+vars
+    a: entero;
+
+inicio{
+    a = 10;
+    undefinedFunction(a); // Función no definida
+}fin

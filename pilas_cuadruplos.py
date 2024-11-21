@@ -5,7 +5,7 @@ class PilasCuadruplos:
         self.pila_operadores = []
         self.pila_operandos = []
         self.pila_tipos = []
-        self.pila_saltos = []  # Agregar la pila de saltos
+        self.pila_saltos = []
 
     def push_operador(self, operador):
         self.pila_operadores.append(operador)

@@ -6,9 +6,9 @@ class TablaVariables:
         self.variables = {"global": {}}
         # Contadores para asignar direcciones de memoria según el tipo y ámbito
         self.contadores = {
-            'global': {'entero': 1000, 'flotante': 2000, 'booleano': 3000},
-            'local': {'entero': 4000, 'flotante': 5000, 'booleano': 6000},
-            'temporal': {'entero': 7000, 'flotante': 8000, 'booleano': 9000}
+            'global': {'entero': 1000, 'flotante': 2000},
+            'local': {'entero': 3000, 'flotante': 4000},
+            'temporal': {'entero': 5000, 'flotante': 6000, 'booleano': 7000}
         }
 
     def agregar_variable(self, nombre, tipo, ambito):

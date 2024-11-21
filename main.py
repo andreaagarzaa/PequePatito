@@ -1,4 +1,3 @@
-# test.py
 import sys
 from antlr4 import *
 from gen.PequePatitoLexer import PequePatitoLexer
@@ -9,25 +8,8 @@ from maquina_virtual import MaquinaVirtual
 from peque_patito_listener import PequePatitoListener
 import traceback
 
-programa = '''
-programa fibonacci;
-vars
-    n, a, b, temp: entero; // Variables locales
-inicio
-{
-    n = 15;
-    a = 0;
-    b = 1;
-    mientras (n > 0) haz {
-        escribe(a);
-        temp = a + b;
-        a = b;
-        b = temp;
-        n = n - 1;
-    };
-}
-fin
-'''
+fileinput= input("Introduce el test a analizar: ")
+programa = open("TestCases/"+fileinput, "r").read()
 
 try:
     # Preparar el input para ANTLR

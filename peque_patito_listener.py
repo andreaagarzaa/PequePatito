@@ -154,22 +154,17 @@ class PequePatitoListener(ParseTreeListener):
             else:
                 self.errores.append(f"Error: Variable '{nombre_var}' no declarada en el ámbito '{self.ambito_actual}'.")
         elif ctx.expresion():
-            pass  # No se hace nada especial aquí
+            pass
         else:
             # Agregar manejo para VERDADERO y FALSO (si aplica)
-            if ctx.VERDADERO() or ctx.FALSO():
-                valor = ctx.getText()
-                tipo = 'booleano'
-                direccion = self.tabla_constantes.agregar_constante(valor, tipo)
-                self.pilas.push_operando(direccion)
-                self.pilas.push_tipo(tipo)
-            elif ctx.llamada():
-                # Si el factor es una llamada a función
-                # Asumimos que el resultado de la función se almacena en una dirección temporal
-                tipo = self.tipo_funcion_llamada
-                direccion = self.direccion_funcion_llamada
-                self.pilas.push_operando(direccion)
-                self.pilas.push_tipo(tipo)
+            # if ctx.VERDADERO() or ctx.FALSO():
+            #     valor = ctx.getText()
+            #     tipo = 'booleano'
+            #     direccion = self.tabla_constantes.agregar_constante(valor, tipo)
+            #     self.pilas.push_operando(direccion)
+            #     self.pilas.push_tipo(tipo)
+
+          pass
 
     def enterOperador(self, ctx: PequePatitoParser.OperadorContext):
         operador = ctx.getText()

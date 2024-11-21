@@ -1,6 +1,5 @@
 grammar PequePatito;
 
-// Regla inicial del programa
 programa : p v f inicio cuerpo FIN;
 inicio: INICIO;
 p: PROGRAMA ID PUNTO_Y_COMA;
@@ -31,22 +30,13 @@ estatuto: asigna
 // Definiciones de sentencias individuales
 asigna: ID ASIGNACION expresion PUNTO_Y_COMA; // Asignación
 imprime: IMPRIME PARENTESIS_IZQ p_imp PARENTESIS_DER PUNTO_Y_COMA; // Imprime
-// p_imp : (expresion | LETRERO | VERDADERO | FALSO) (COMA (expresion | LETRERO | VERDADERO | FALSO))* ;// Imprime
 p_imp : (expresion | LETRERO ) (COMA (expresion | LETRERO))* ;
 condicion: SI PARENTESIS_IZQ expresion PARENTESIS_DER cuerpo else_part PUNTO_Y_COMA; // Condicional
 else_part: SINO cuerpo | ; // Parte del else (opcional)
 ciclo: MIETRAS PARENTESIS_IZQ expresion PARENTESIS_DER HAZ cuerpo PUNTO_Y_COMA; // Ciclo
+// haz_ciclo: HAZ cuerpo MIETRAS PARENTESIS_IZQ expresion PARENTESIS_DER PUNTO_Y_COMA; // Ciclo
 llamada: ID PARENTESIS_IZQ (expresion (COMA expresion)*)? PARENTESIS_DER PUNTO_Y_COMA; // Llamada a función
-
-// Expresiones y operadores
-//expresion : bo | logica;
-//bo: exp (op_relacional exp)?;
-//logica : logica op_logico logica
-//       | NOT logica
-//       | bo
-//       ;
-//op_relacional : MAYOR | MENOR | IGUAL | DIFERENTE;
-//op_logico : AND | OR;
+// for : PARA PARENTESIS_IZQ asigna PUNTO_Y_COMA expresion PUNTO_Y_COMA asigna PARENTESIS_DER cuerpo PUNTO_Y_COMA; // Ciclo for
 expresion: exp (bo exp)?;
 bo: MAYOR | MENOR | MAYOR_IGUAL | MENOR_IGUAL | DIFERENTE | IGUAL_IGUAL;
 

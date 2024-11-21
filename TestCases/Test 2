@@ -1,0 +1,10 @@
+// Caso 1.2: Uso de Variables No Declaradas
+// Verifica que el compilador detecte el uso de variables no declaradas
+programa TestUndefinedVar;
+vars
+    a: entero;
+
+inicio{
+    a = 5;
+    b = 10; // 'b' no ha sido declarada
+}fin

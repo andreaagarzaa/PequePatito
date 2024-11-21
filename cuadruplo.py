@@ -1,5 +1,4 @@
 # cuadruplo.py
-
 class Cuadruplo:
     def __init__(self, operador, operando1, operando2, resultado):
         self.operador = operador

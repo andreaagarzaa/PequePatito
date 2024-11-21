@@ -1,0 +1,35 @@
+programa TestIntegration;
+vars
+    a, b: entero;
+    msg: cadena;
+
+nula multiply(x: entero, y: entero) {
+    vars
+        product: entero;
+    {
+        product = x * y;
+        escribe("Producto: ", product);
+    }
+};
+
+nula mainFunction(z: entero) {
+    vars
+        sum: entero;
+    {
+        sum = z + 10;
+        escribe("Suma: ", sum);
+        multiply(sum, z);
+    }
+};
+
+inicio{
+    a = 5;
+    b = 3;
+    msg = "Inicio del programa.";
+    escribe(msg);
+    mainFunction(a);
+    mientras (a < 20) haz {
+        escribe("a: ", a);
+        a = a + b;
+    };
+}fin

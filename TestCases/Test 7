@@ -1,0 +1,14 @@
+// Operaciones con Tipos Diferentes
+// Verifica que el compilador detecte operaciones entre tipos de datos diferentes
+programa TestMixedTypes;
+vars
+    a: entero;
+    b: flotante;
+    c: flotante;
+
+inicio{
+    a = 10;
+    b = 3.5;
+    c = a + b; // Operación entre entero y flotante
+    escribe("Resultado: ", c);
+}fin

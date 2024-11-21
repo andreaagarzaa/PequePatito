@@ -1,0 +1,22 @@
+// Test: Variables Globales y Locales con el Mismo Nombre
+// Verifica que el compilador detecte la redefinición de variables
+
+programa TestScope;
+vars
+    x: entero;
+
+nula setX(newX: entero) {
+    vars
+        x: entero;
+    {
+        x = newX;
+        escribe("Valor de x dentro de setX: ", x);
+    }
+};
+
+inicio{
+    x = 10;
+    escribe("Valor de x antes de llamar a setX: ", x);
+    setX(20);
+    escribe("Valor de x después de llamar a setX: ", x);
+}fin

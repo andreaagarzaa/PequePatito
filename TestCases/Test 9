@@ -1,0 +1,13 @@
+// Uso de Constantes en Operaciones
+programa TestConstants;
+vars
+    a: entero;
+    b: flotante;
+    c: flotante;
+
+inicio{
+    a = 10;
+    b = 2.5;
+    c = a * b + 5; // Uso de constantes 2.5 y 5
+    escribe("Resultado: ", c);
+}fin

@@ -1,0 +1,19 @@
+// Llamada a Función con Parámetros Incorrectos (Cantidad)
+// Verifica que el compilador detecte cuando se llama a una función con la cantidad incorrecta de parámetros
+programa TestFuncParams;
+vars
+    a: entero;
+
+nula printSum(x: entero, y: entero) {
+    vars
+        sum: entero;
+    {
+        sum = x + y;
+        escribe("Suma: ", sum);
+    }
+};
+
+inicio{
+    a = 10;
+    printSum(a, 20, 30); // Demasiados parámetros
+}fin

@@ -3,12 +3,7 @@ class TablaConstantes:
     def __init__(self):
         self.constantes = {}  # {valor: direccion}
         self.constantes_direccion = {}  # {direccion: {'valor': valor, 'tipo': tipo}}
-        self.contadores = {
-            'entero': 10000,
-            'flotante': 11000,
-            'cadena': 12000,
-            'booleano': 13000
-        }
+        self.contadores = { 'entero': 8000, 'flotante': 9000,'cadena': 10000}
 
     def agregar_constante(self, valor, tipo):
         if valor not in self.constantes:

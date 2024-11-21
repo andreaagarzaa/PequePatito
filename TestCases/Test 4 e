@@ -1,0 +1,20 @@
+// Test:  Llamada a Función con Parámetros Incorrectos (Tipos)
+// Verifica que el compilador detecte cuando se llama a una función con parámetros de tipos incorrectos
+
+programa TestFuncParamTypes;
+vars
+    a: entero;
+
+nula printSum(x: entero, y: entero) {
+    vars
+        sum: entero;
+    {
+        sum = x + y;
+        escribe("Suma: ", sum);
+    }
+};
+
+inicio{
+    a = 10;
+    printSum(a, 23.2); // Tipo incorrecto para 'y'
+}fin

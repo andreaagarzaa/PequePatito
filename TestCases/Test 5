@@ -1,0 +1,19 @@
+// Llamada a Función sin Parámetros cuando se Esperan
+// Verifica que el compilador detecte cuando se llama a una función sin parámetros cuando se esperan
+programa TestFuncNoParams;
+vars
+    a: entero;
+
+nula printSum(x: entero, y: entero) {
+    vars
+        sum: entero;
+    {
+        sum = x + y;
+        escribe("Suma: ", sum);
+    }
+};
+
+inicio{
+    a = 10;
+    printSum(); // Faltan parámetros
+}fin
