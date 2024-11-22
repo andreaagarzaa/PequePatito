@@ -11,6 +11,7 @@ nula miFuncion(c: entero, a: entero) {
         pi = 3.14;
         c = a + 10;
         escribe("El valor de c es: ", c);
+
     }
 };
 

@@ -1,6 +1,6 @@
 programa fibonacci;
 vars
-    n, a, b, temp: entero; // Variables locales
+    n, a, b, temp: entero;
 inicio
 {
     n = 15;

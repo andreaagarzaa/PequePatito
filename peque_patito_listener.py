@@ -6,11 +6,27 @@ from fila_cuadruplos import FilaCuadruplos
 from gen.PequePatitoParser import PequePatitoParser
 from tabla_constantes import TablaConstantes
 
+
 class PequePatitoListener(ParseTreeListener):
+    """
+    Listener personalizado para el compilador PequePatito.
+
+    Este listener maneja eventos de entrada y salida en el árbol de sintaxis
+    generado por ANTLR, realizando acciones semánticas como la gestión de variables,
+    generación de cuádruplos, manejo de funciones, condicionales, ciclos, entre otros.
+    """
+
     def __init__(self, cubo_semantico, tabla_variables, directorio_funciones):
+        """
+        Inicializa el listener con las estructuras necesarias para la compilación.
+
+        Args:
+            cubo_semantico: Instancia del cubo semántico para la verificación de tipos.
+            tabla_variables: Instancia de TablaVariables para gestionar variables.
+            directorio_funciones: Instancia de DirectorioFunciones para gestionar funciones.
+        """
         self.cubo_semantico = cubo_semantico
         self.tabla_variables = tabla_variables
-        self.tabla_variables_actual = self.tabla_variables.variables
         self.directorio_funciones = directorio_funciones
         self.ambito_actual = "global"
         self.pila_scopes = ["global"]
@@ -27,6 +43,12 @@ class PequePatitoListener(ParseTreeListener):
         self.param_contador = 0
 
     def generar_temporal(self, tipo):
+        """
+        Genera una variable temporal para almacenar resultados intermedios.
+
+        Returns:
+            int: Dirección de memoria asignada a la variable temporal.
+        """
         direccion = self.tabla_variables.contadores['temporal'][tipo]
         temp = f"t{self.cont_temp}"
         self.cont_temp += 1
@@ -35,9 +57,17 @@ class PequePatitoListener(ParseTreeListener):
         return direccion
 
     def exitPrograma(self, ctx: PequePatitoParser.ProgramaContext):
+        """
+        Maneja la salida de la regla 'programa', agregando un cuádruplo de fin.
+
+        """
         self.fila_cuadruplos.agregar_cuadruplo('END', None, None, None)
 
     def enterInicio(self, ctx: PequePatitoParser.InicioContext):
+        """
+        Maneja la entrada al bloque 'inicio', actualizando el cuádruplo GOTO inicial.
+
+        """
         if self.ambito_actual == 'global' and not hasattr(self, 'main_goto_updated'):
             # Actualizar el cuádruplo GOTO inicial con la dirección actual
             self.fila_cuadruplos.cuadruplos[0] = (
@@ -50,6 +80,11 @@ class PequePatitoListener(ParseTreeListener):
 
     # Métodos para manejar declaraciones de variables
     def enterVar_declaracion(self, ctx: PequePatitoParser.Var_declaracionContext):
+        """
+        Maneja la entrada a una declaración de variables, agregando cada variable
+        a la tabla de variables y asignándole una dirección de memoria.
+
+        """
         scope_actual = self.pila_scopes[-1]
         variables = ctx.id_list().ID()
         tipo = ctx.tipo().getText()
@@ -72,6 +107,11 @@ class PequePatitoListener(ParseTreeListener):
                     }
 
     def enterFuncs(self, ctx: PequePatitoParser.FuncsContext):
+        """
+        Maneja la entrada a la declaración de una función, agregándola al directorio de funciones,
+        asignando direcciones de memoria a sus parámetros y generando el cuádruplo de inicio de función.
+
+        """
         nombre_funcion = ctx.ID().getText()
         tipo_retorno = ctx.getChild(0).getText()
 
@@ -117,11 +157,21 @@ class PequePatitoListener(ParseTreeListener):
                     variables_locales[param_nombre] = {'tipo': param_tipo, 'direccion': direccion}
 
     def exitFuncs(self, ctx: PequePatitoParser.FuncsContext):
+        """
+        Maneja la salida de la declaración de una función, generando el cuádruplo de fin de función
+        y restaurando el ámbito anterior.
+
+        """
         self.fila_cuadruplos.agregar_cuadruplo('ENDPROC', None, None, None)
         self.pila_scopes.pop()
         self.ambito_actual = self.pila_scopes[-1]
 
     def enterFactor(self, ctx: PequePatitoParser.FactorContext):
+        """
+        Maneja la entrada a un factor en una expresión, verificando que la variable
+        esté declarada en el ámbito actual o global.
+
+        """
         if ctx.ID():
             nombre_var = ctx.ID().getText()
             scope_actual = self.pila_scopes[-1]
@@ -132,6 +182,10 @@ class PequePatitoListener(ParseTreeListener):
                     self.errores.append(f"Error: Variable '{nombre_var}' no declarada en el ámbito '{scope_actual}'.")
 
     def exitFactor(self, ctx: PequePatitoParser.FactorContext):
+        """
+        Maneja la salida de un factor en una expresión, empujando el operando y su tipo a las pilas.
+
+        """
         if ctx.NUMERO():
             valor = ctx.NUMERO().getText()
             if '.' in valor:
@@ -154,31 +208,44 @@ class PequePatitoListener(ParseTreeListener):
             else:
                 self.errores.append(f"Error: Variable '{nombre_var}' no declarada en el ámbito '{self.ambito_actual}'.")
         elif ctx.expresion():
-            pass
+            pass  # Las expresiones anidadas ya son manejadas en otros métodos
         else:
-            # Agregar manejo para VERDADERO y FALSO (si aplica)
-            # if ctx.VERDADERO() or ctx.FALSO():
-            #     valor = ctx.getText()
-            #     tipo = 'booleano'
-            #     direccion = self.tabla_constantes.agregar_constante(valor, tipo)
-            #     self.pilas.push_operando(direccion)
-            #     self.pilas.push_tipo(tipo)
-
-          pass
+            # Manejo de otros tipos de literales (si aplica)
+            pass
 
     def enterOperador(self, ctx: PequePatitoParser.OperadorContext):
+        """
+        Maneja la entrada a un operador aritmético (+, -) en una expresión,
+        empujándolo a la pila de operadores.
+
+        """
         operador = ctx.getText()
         self.pilas.push_operador(operador)
 
     def enterOperador_factor(self, ctx: PequePatitoParser.Operador_factorContext):
+        """
+        Maneja la entrada a un operador de multiplicación/división (*, /) en una expresión,
+        empujándolo a la pila de operadores.
+
+        """
         operador = ctx.getText()
         self.pilas.push_operador(operador)
 
     def enterBo(self, ctx: PequePatitoParser.BoContext):
+        """
+        Maneja la entrada a un operador booleano o relacional (>, <, ==, !=, >=, <=),
+        empujándolo a la pila de operadores.
+
+        """
         operador = ctx.getText()
         self.pilas.push_operador(operador)
 
     def exitTermino(self, ctx: PequePatitoParser.TerminoContext):
+        """
+        Maneja la salida de un término en una expresión, procesando operadores de multiplicación
+        y división, generando cuádruplos y manejando tipos.
+
+        """
         while self.pilas.pila_operadores and self.pilas.pila_operadores[-1] in ['*', '/']:
             operador = self.pilas.pop_operador()
             operando_derecho = self.pilas.pop_operando()
@@ -198,6 +265,11 @@ class PequePatitoListener(ParseTreeListener):
                 self.pilas.push_tipo(tipo_resultado)
 
     def exitExp(self, ctx: PequePatitoParser.ExpContext):
+        """
+        Maneja la salida de una expresión, procesando operadores de suma y resta,
+        generando cuádruplos y manejando tipos.
+
+        """
         while self.pilas.pila_operadores and self.pilas.pila_operadores[-1] in ['+', '-']:
             operador = self.pilas.pop_operador()
             operando_derecho = self.pilas.pop_operando()
@@ -215,6 +287,11 @@ class PequePatitoListener(ParseTreeListener):
                 self.fila_cuadruplos.agregar_cuadruplo(operador, operando_izquierdo, operando_derecho, temp_direccion)
 
     def exitExpresion(self, ctx: PequePatitoParser.ExpresionContext):
+        """
+        Maneja la salida de una expresión, identificando si es una condición para
+        un condicional o ciclo, o parte de una llamada a función. Genera cuádruplos
+        de salto condicional y manejo de parámetros.
+        """
         if ctx.bo():
             operador = self.pilas.pop_operador()
             operando_derecho = self.pilas.pop_operando()
@@ -240,7 +317,9 @@ class PequePatitoListener(ParseTreeListener):
             if tipo != 'booleano':
                 self.errores.append(f"Error: La condición debe ser de tipo booleano, pero es '{tipo}'.")
             else:
+                # Generar cuádruplo GOTOF para salto condicional
                 self.fila_cuadruplos.agregar_cuadruplo('GOTOF', resultado, None, None)
+                # Poner en la pila de saltos el índice del cuádruplo GOTOF
                 self.pilas.push_salto(len(self.fila_cuadruplos.cuadruplos) - 1)
                 print(f"Se generó cuádruplo GOTOF en condición, índice: {len(self.fila_cuadruplos.cuadruplos) - 1}")
         elif self.es_expresion_de_ciclo(ctx):
@@ -250,7 +329,9 @@ class PequePatitoListener(ParseTreeListener):
             if tipo != 'booleano':
                 self.errores.append(f"Error: La condición del ciclo debe ser de tipo booleano, pero es '{tipo}'.")
             else:
+                # Generar cuádruplo GOTOF para salto condicional en ciclo
                 self.fila_cuadruplos.agregar_cuadruplo('GOTOF', resultado, None, None)
+                # Poner en la pila de saltos el índice del cuádruplo GOTOF
                 self.pilas.push_salto(len(self.fila_cuadruplos.cuadruplos) - 1)
                 print(f"Se generó cuádruplo GOTOF en ciclo, índice: {len(self.fila_cuadruplos.cuadruplos) - 1}")
         elif self.is_in_function_call():
@@ -265,17 +346,22 @@ class PequePatitoListener(ParseTreeListener):
             expected_param = funcion_info['parametros'][self.param_contador]
             expected_type = expected_param['tipo']
             if param_type != expected_type:
-                self.errores.append(f"Error: El parámetro {self.param_contador+1} de la función '{nombre_funcion}' esperaba un '{expected_type}', pero se recibió un '{param_type}'.")
-            # Generar cuádruplo PARAM
-            self.fila_cuadruplos.agregar_cuadruplo('PARAM', param_value, None, f"param{self.param_contador+1}")
+                self.errores.append(
+                    f"Error: El parámetro {self.param_contador + 1} de la función '{nombre_funcion}' esperaba un '{expected_type}', pero se recibió un '{param_type}'.")
+            # Generar cuádruplo PARAM para pasar el parámetro a la función
+            self.fila_cuadruplos.agregar_cuadruplo('PARAM', param_value, None, f"param{self.param_contador + 1}")
             self.param_contador += 1
 
     # Métodos para manejar asignaciones
     def exitAsigna(self, ctx: PequePatitoParser.AsignaContext):
+        """
+        Maneja la salida de una asignación, verificando tipos y generando el cuádruplo de asignación.
+
+        """
         variable = ctx.ID().getText()
-        print(f"Asignando a variable '{variable}'")
-        print(f"Pila de operandos antes de pop: {self.pilas.pila_operandos}")
-        print(f"Pila de tipos antes de pop: {self.pilas.pila_tipos}")
+       # print(f"Asignando a variable '{variable}'")
+       # print(f"Pila de operandos antes de pop: {self.pilas.pila_operandos}")
+      #  print(f"Pila de tipos antes de pop: {self.pilas.pila_tipos}")
         valor = self.pilas.pop_operando()
         tipo_valor = self.pilas.pop_tipo()
         if valor is None or tipo_valor is None:
@@ -294,32 +380,53 @@ class PequePatitoListener(ParseTreeListener):
                 self.errores.append(
                     f"Error de tipos: No se puede asignar tipo '{tipo_valor}' a variable '{variable}' de tipo '{tipo_variable}'.")
             else:
+                # Generar cuádruplo de asignación
                 self.fila_cuadruplos.agregar_cuadruplo('=', valor, None, direccion_variable)
 
     # Métodos para manejar sentencias de impresión
     def enterImprime(self, ctx: PequePatitoParser.ImprimeContext):
+        """
+        Maneja la entrada a una sentencia de impresión, inicializando la lista de parámetros.
+        """
         self.lista_param_impresion = []
 
     def exitImprime(self, ctx: PequePatitoParser.ImprimeContext):
+        """
+        Maneja la salida de una sentencia de impresión, generando cuádruplos de impresión
+        para cada parámetro.
+
+        """
         for parametro in self.lista_param_impresion:
             self.fila_cuadruplos.agregar_cuadruplo('print', parametro, None, None)
         self.lista_param_impresion = []
 
     def exitP_imp(self, ctx: PequePatitoParser.P_impContext):
+        """
+        Maneja la salida de un parámetro dentro de una sentencia de impresión, agregando
+        la dirección de la expresión o la cadena a la lista de parámetros de impresión.
+
+        """
         if ctx.expresion():
             expr_result = self.pilas.pop_operando()
             self.lista_param_impresion.insert(0, expr_result)
         elif ctx.LETRERO():
-            cadena = ctx.LETRERO()[0].getText()
+            cadena = ctx.LETRERO().getText()
             direccion = self.tabla_constantes.agregar_constante(cadena, 'cadena')
+            print(f"Imprimiendo cadena: {direccion}")
+
             self.lista_param_impresion.insert(0, direccion)
 
     # Métodos para manejar sentencias condicionales
     def enterCondicion(self, ctx: PequePatitoParser.CondicionContext):
-        pass  # Nada que hacer al entrar a la condición
+        pass
 
     def exitCondicion(self, ctx: PequePatitoParser.CondicionContext):
-        print(f"Llamando a exitCondicion. Pila de saltos antes de pop: {self.pilas.pila_saltos}")
+        """
+        Maneja la salida de una sentencia condicional 'si', actualizando los
+        cuádruplos de salto según si existe o no una parte 'sino'.
+
+        """
+       # print(f"Llamando a exitCondicion. Pila de saltos antes de pop: {self.pilas.pila_saltos}")
         if ctx.else_part():
             # Si hay una parte else, los pops ya se manejaron
             pass
@@ -329,7 +436,7 @@ class PequePatitoListener(ParseTreeListener):
                 self.errores.append("Error: Pila de saltos está vacía antes de hacer pop en exitCondicion.")
                 return
             end = self.pilas.pop_salto()
-            # Actualizar el cuádruplo GOTOF con la dirección correcta
+            # Actualizar el cuádruplo GOTOF con la dirección correcta (final del programa)
             self.fila_cuadruplos.cuadruplos[end] = (
                 self.fila_cuadruplos.cuadruplos[end][0],
                 self.fila_cuadruplos.cuadruplos[end][1],
@@ -338,6 +445,11 @@ class PequePatitoListener(ParseTreeListener):
             )
 
     def enterElse_part(self, ctx: PequePatitoParser.Else_partContext):
+        """
+        Maneja la entrada a la parte 'sino' de una sentencia condicional, generando
+        un cuádruplo GOTO y actualizando el cuádruplo GOTOF de la condición.
+
+        """
         # Generar GOTO y hacer push a pila_saltos
         self.fila_cuadruplos.agregar_cuadruplo('GOTO', None, None, None)
         goto_indice = len(self.fila_cuadruplos.cuadruplos) - 1
@@ -355,6 +467,11 @@ class PequePatitoListener(ParseTreeListener):
         )
 
     def exitElse_part(self, ctx: PequePatitoParser.Else_partContext):
+        """
+        Maneja la salida de la parte 'sino' de una sentencia condicional, actualizando
+        el cuádruplo GOTO generado al inicio del else.
+
+        """
         # Pop del índice del GOTO y actualizarlo al final del else
         if not self.pilas.pila_saltos:
             self.errores.append("Error: Pila de saltos está vacía antes de hacer pop en exitElse_part.")
@@ -369,12 +486,24 @@ class PequePatitoListener(ParseTreeListener):
 
     # Métodos para manejar ciclos
     def enterCiclo(self, ctx: PequePatitoParser.CicloContext):
-        # Push del inicio del ciclo
+        """
+        Maneja la entrada a un ciclo 'mientras', marcando el inicio del ciclo
+        en la pila de saltos.
+
+        """
+        # Push del inicio del ciclo (dirección del cuádruplo actual)
         self.pilas.push_salto(len(self.fila_cuadruplos.cuadruplos))
 
     def exitCiclo(self, ctx: PequePatitoParser.CicloContext):
-        falso = self.pilas.pop_salto()
-        retorno = self.pilas.pop_salto()
+        """
+        Maneja la salida de un ciclo 'mientras', generando un cuádruplo GOTO
+        para saltar al inicio del ciclo y actualizando el cuádruplo GOTOF
+        con la dirección después del ciclo.
+
+        """
+        falso = self.pilas.pop_salto()  # Índice del GOTOF generado en la condición
+        retorno = self.pilas.pop_salto()  # Inicio del ciclo
+        # Generar cuádruplo GOTO para saltar de vuelta al inicio del ciclo
         self.fila_cuadruplos.agregar_cuadruplo('GOTO', None, None, retorno)
         # Actualizar el cuádruplo GOTOF con la dirección después del ciclo
         self.fila_cuadruplos.cuadruplos[falso] = (
@@ -386,6 +515,12 @@ class PequePatitoListener(ParseTreeListener):
 
     # Funciones para identificar expresiones de condición y ciclo
     def es_expresion_de_condicion(self, ctx):
+        """
+        Determina si una expresión es parte de una condición de una sentencia 'si'.
+
+        Returns:
+            bool: True si la expresión es una condición de 'si', False de lo contrario.
+        """
         parent_ctx = ctx.parentCtx
         if isinstance(parent_ctx, PequePatitoParser.CondicionContext):
             # Verificar si la expresión es la condición del 'si'
@@ -393,6 +528,12 @@ class PequePatitoListener(ParseTreeListener):
         return False
 
     def es_expresion_de_ciclo(self, ctx):
+        """
+        Determina si una expresión es parte de una condición de una sentencia 'mientras'.
+
+        Returns:
+            bool: True si la expresión es una condición de 'mientras', False de lo contrario.
+        """
         parent_ctx = ctx.parentCtx
         if isinstance(parent_ctx, PequePatitoParser.CicloContext):
             # Verificar si la expresión es la condición del 'mientras'
@@ -401,39 +542,57 @@ class PequePatitoListener(ParseTreeListener):
 
     # Métodos para manejar llamadas a funciones
     def enterLlamada(self, ctx: PequePatitoParser.LlamadaContext):
+        """
+        Maneja la entrada a una llamada a función, verificando su existencia y
+        generando el cuádruplo ERA para preparar la activación de la función.
+        """
         nombre_funcion = ctx.ID().getText()
         if nombre_funcion not in self.directorio_funciones.funciones:
             self.errores.append(f"Error: La función '{nombre_funcion}' no está definida.")
             return
-        # Start parameter counting
+        # Iniciar el conteo de parámetros
         self.funcion_actual = nombre_funcion
         self.param_contador = 0
-        # Generate ERA quadruple
+        # Generar cuádruplo ERA
         self.fila_cuadruplos.agregar_cuadruplo('ERA', nombre_funcion, None, None)
 
     def exitLlamada(self, ctx: PequePatitoParser.LlamadaContext):
+        """
+        Maneja la salida de una llamada a función, verificando la cantidad de parámetros
+        y generando el cuádruplo GOSUB para realizar la llamada.
+        """
         nombre_funcion = ctx.ID().getText()
         funcion_info = self.directorio_funciones.funciones[nombre_funcion]
         num_params = len(funcion_info['parametros'])
         if self.param_contador != num_params:
-            self.errores.append(f"Error: La función '{nombre_funcion}' esperaba {num_params} parámetros, pero se proporcionaron {self.param_contador}.")
-        # Generate GOSUB quadruple
+            self.errores.append(
+                f"Error: La función '{nombre_funcion}' esperaba {num_params} parámetros, pero se proporcionaron {self.param_contador}.")
+
+        # Generar cuádruplo GOSUB para saltar al inicio de la función
         cuadruplo_inicio = funcion_info['cuadruplo_inicio']
         self.fila_cuadruplos.agregar_cuadruplo('GOSUB', nombre_funcion, None, cuadruplo_inicio)
+
         # Si la función tiene tipo de retorno distinto de 'nula', manejar el valor de retorno
         tipo_retorno = funcion_info['tipo_retorno']
         if tipo_retorno != 'nula':
             temp_direccion = self.generar_temporal(tipo_retorno)
+            # Asignar el valor de retorno a la variable temporal correspondiente
             self.direccion_funcion_llamada = temp_direccion
             self.tipo_funcion_llamada = tipo_retorno
-            # No se genera cuádruplo para asignar valor de retorno ya que no manejamos retornos
+            # Nota: No se genera cuádruplo para asignar el valor de retorno aquí
         else:
             # Si la función no retorna valor, limpiar variables temporales
             self.direccion_funcion_llamada = None
             self.tipo_funcion_llamada = None
-        # Reset function call tracking
+        # Resetear el seguimiento de la llamada a la función
         self.funcion_actual = None
         self.param_contador = 0
 
     def is_in_function_call(self):
+        """
+        Verifica si actualmente se está procesando una llamada a función.
+
+        Returns:
+            bool: True si se está dentro de una llamada a función, False de lo contrario.
+        """
         return self.funcion_actual is not None

@@ -1,5 +1,6 @@
 // Llamada a Función sin Parámetros cuando se Esperan
 // Verifica que el compilador detecte cuando se llama a una función sin parámetros cuando se esperan
+
 programa TestFuncNoParams;
 vars
     a: entero;

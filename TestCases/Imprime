@@ -1,0 +1,13 @@
+programa testImprime;
+vars
+    x, y : entero;
+    z : flotante;
+
+inicio{
+    x = 10;
+    y = 20;
+    z = x + y * 1.5;
+    escribe("El valor de x es: ", x);
+    escribe("El valor de y es: ", y);
+    escribe("El valor de z es: ", z);
+}fin

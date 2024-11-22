@@ -1,8 +1,8 @@
 # tabla_constantes.py
 class TablaConstantes:
     def __init__(self):
-        self.constantes = {}  # {valor: direccion}
-        self.constantes_direccion = {}  # {direccion: {'valor': valor, 'tipo': tipo}}
+        self.constantes = {}
+        self.constantes_direccion = {}
         self.contadores = { 'entero': 8000, 'flotante': 9000,'cadena': 10000}
 
     def agregar_constante(self, valor, tipo):
