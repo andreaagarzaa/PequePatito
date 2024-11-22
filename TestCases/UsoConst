@@ -1,4 +1,5 @@
 // Uso de Constantes en Operaciones
+// Verifica que el compilador permita el uso de constantes en operaciones aritméticas
 programa TestConstants;
 vars
     a: entero;

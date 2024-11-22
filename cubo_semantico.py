@@ -1,12 +1,10 @@
 # cubo_semantico.py
-
 class CuboSemantico:
     """
     Clase que representa el cubo semántico utilizado en la verificación de tipos en un compilador.
     """
-
     def __init__(self):
-        # Estructura de cubo semántico para PequePatito organizada por operadores y tipos en un diccionario anidado
+        # Estructura de cubo semántico para PequePatito organizada por operadores y tipos en un diccionario
         self.cubo = {
             # Operadores Aritméticos
             '+': {

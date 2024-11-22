@@ -10,23 +10,38 @@ from peque_patito_listener import PequePatitoListener
 import traceback
 
 programa = '''
-programa fibonacci;
+programa miPrograma;
 vars
-    n, a, b, temp: entero; // Variables locales
-inicio
-{
-    n = 15;
-    a = 0;
-    b = 1;
-    mientras (n > 0) haz {
-        escribe(a);
-        temp = a + b;
-        a = b;
-        b = temp;
-        n = n - 1;
+    x, y : entero;
+    z : flotante;
+    andy: entero;
+
+nula miFuncion(c: entero, a: entero) {
+    vars
+        pi: flotante;
+    {
+        pi = 3.14;
+        c = a + 10;
+        escribe("El valor de c es: ", c);
+    }
+};
+
+inicio{
+    x = 10;
+    y = 20;
+    z = x + y * 1.5;
+    si (x > y) {
+        escribe("x es mayor que y");
+    } sino {
+        escribe("y es mayor o igual que x");
     };
-}
-fin
+    mientras (x < 50) haz {
+        andy = 3;
+        x = x + 5;
+        escribe("x ahora es: ", x);
+    };
+    miFuncion(x, y);
+}fin
 '''
 
 try:

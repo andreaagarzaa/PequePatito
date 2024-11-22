@@ -1,0 +1,11 @@
+programa TestCicloSinEjecucion;
+vars
+    contador : entero;
+inicio{
+    contador = 10;
+    mientras (contador < 5) haz {
+        escribe("Este mensaje nunca se mostrará.");
+        contador = contador + 1;
+    };
+    escribe("Ciclo finalizado.");
+}fin

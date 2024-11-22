@@ -1,0 +1,12 @@
+//Objetivo: Verificar un ciclo mientras donde las variables dentro del ciclo modifican la condición de salida.
+programa TestCicloConVariablesModificadas;
+vars
+    numero : entero;
+inicio{
+    numero = 0;
+    mientras (numero < 10) haz {
+        escribe("Número actual: ", numero);
+        numero = numero + 2;
+    };
+    escribe("Ciclo finalizado. Número final: ", numero);
+}fin

@@ -1,0 +1,12 @@
+programa TestCondicionalSimple;
+vars
+    a, b : entero;
+inicio{
+    a = 15;
+    b = 10;
+    si (a > b) {
+        escribe(a, " es mayor que ", b);
+    } sino {
+        escribe(b, " es mayor o igual que ", a);
+    };
+}fin

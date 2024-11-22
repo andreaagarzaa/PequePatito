@@ -1,0 +1,17 @@
+// Test Case: Aritmético
+// Verificar la correcta ejecución de operaciones aritméticas básicas (suma, resta, multiplicación, división) y la asignación de resultados a variables.
+
+ TestAritmetico;
+vars
+    a, b, c, d : entero;
+    e : flotante;
+inicio{
+    a = 10;
+    b = 5;
+    c = a + b;
+    d = a - b;
+    e = c / d;
+    escribe("Suma de a y b: ", c);
+    escribe("Resta de a y b: ", d);
+    escribe("División de c entre d: ", e);
+}fin

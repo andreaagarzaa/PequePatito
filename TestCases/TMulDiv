@@ -1,0 +1,16 @@
+// TestMulDiv
+// Verificar la correcta ejecución de operaciones de multiplicación y división, así como el manejo de tipos flotantes en las operaciones.
+
+programa TestMulDiv;
+vars
+    a, b, c : entero;
+    d, e : flotante;
+inicio{
+    a = 8;
+    b = 4;
+    c = a * b;
+    d = 20.0;
+    e = d / b;
+    escribe("Multiplicación de a y b: ", c);
+    escribe("División de d entre b: ", e);
+}fin
